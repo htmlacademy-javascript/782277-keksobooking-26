@@ -4,7 +4,7 @@ const AVATAR = {
   prefix: '0'
 };
 
-const TITLE = [
+const TITLES = [
   'Коробочка для котеи',
   'Квартира в центре столицы',
   'Квартира на берегу моря',
@@ -17,7 +17,7 @@ const PRICE = {
   to: 1000000
 };
 
-const TYPE = [
+const TYPES = [
   'palace',
   'flat',
   'house',
@@ -105,7 +105,7 @@ function getRandomSlicedArray (elements) {
   const randomSlicedArray = [];
   const randomSlicedArrayLength = getRandomPositiveInteger(1, elements.length);
   while (randomSlicedArray.length < randomSlicedArrayLength) {
-    const randomElement = elements[getRandomPositiveInteger(0, elements.length - 1)];
+    const randomElement = getRandomArrayElement(elements);
     if (!randomSlicedArray.includes(randomElement)) {
       randomSlicedArray.push(randomElement);
     }
@@ -117,37 +117,16 @@ function getRandomArrayElement (elements) {
   return elements[getRandomPositiveInteger(0, elements.length - 1)];
 }
 
-function getAvatarSrc () {
-  const avatarSrc = [];
-  for (let i = AVATAR.from; i <= AVATAR.to; i++) {
-    const imageSrc = `img/avatars/user${i < 10 ? AVATAR.prefix + i : i}.png`;
-    avatarSrc.push(imageSrc);
-  }
-  avatarSrc.sort(() => Math.random() - 0.5);
-  return avatarSrc;
-}
-
-let avatarCount = -1;
-const avatarImages = getAvatarSrc();
-
-function getRandomAvatar () {
-  avatarCount++;
-  return avatarImages[avatarCount];
-}
-
-function createAnnouncement () {
-  const latitude = getRandomPositiveFloat(LOCATION.lat.from, LOCATION.lat.to, LOCATION.digits);
-  const longitude = getRandomPositiveFloat(LOCATION.lng.from, LOCATION.lng.to, LOCATION.digits);
-
+function createAnnouncement (authorAvatar, locationLat, locationLng) {
   return {
     author: {
-      avatar: getRandomAvatar()
+      avatar: authorAvatar
     },
     offer: {
-      title: getRandomArrayElement(TITLE),
-      address: `${latitude}, ${longitude}`,
+      title: getRandomArrayElement(TITLES),
+      address: `${locationLat}, ${locationLng}`,
       price: getRandomPositiveInteger(PRICE.from, PRICE.to),
-      type: getRandomArrayElement(TYPE),
+      type: getRandomArrayElement(TYPES),
       rooms: getRandomPositiveInteger(ROOMS.from, ROOMS.to),
       guests: getRandomPositiveInteger(GUESTS.from, GUESTS.to),
       checkin: getRandomArrayElement(CHECKIN),
@@ -157,15 +136,44 @@ function createAnnouncement () {
       photos: getRandomSlicedArray(PHOTOS)
     },
     location: {
-      lat: latitude,
-      lng: longitude
+      lat: locationLat,
+      lng: locationLng
     }
   };
 }
 
-const similarAnnouncement = Array.from({length: QUANTITY_ANNOUNCEMENT}, createAnnouncement);
+function createSimilarAnnouncements () {
+  const avatarImageSrc = getAvatarSrc();
+  const similarAnnouncements = [];
+
+  function getAvatarSrc () {
+    const avatarSrc = [];
+    for (let i = AVATAR.from; i <= AVATAR.to; i++) {
+      const imageSrc = `img/avatars/user${i < 10 ? AVATAR.prefix + i : i}.png`;
+      avatarSrc.push(imageSrc);
+    }
+    return avatarSrc;
+  }
+
+  function getRandomAvatar (avatars) {
+    const randomIndex = getRandomPositiveInteger(0, avatars.length - 1);
+    const randomAvatar = avatars[randomIndex];
+    avatars.splice(randomIndex, 1);
+    return randomAvatar;
+  }
+
+  for (let i = 1; i <= QUANTITY_ANNOUNCEMENT; i++) {
+    const avatarImage = getRandomAvatar(avatarImageSrc);
+    const latitude = getRandomPositiveFloat(LOCATION.lat.from, LOCATION.lat.to, LOCATION.digits);
+    const longitude = getRandomPositiveFloat(LOCATION.lng.from, LOCATION.lng.to, LOCATION.digits);
+    const announcement = createAnnouncement(avatarImage, latitude, longitude);
+    similarAnnouncements.push(announcement);
+  }
+
+  return similarAnnouncements;
+}
 
 // Добавил в игнор, чтобы была возможность отправить задание на проверку
 /* eslint-disable */
-console.log(similarAnnouncement);
+console.log(createSimilarAnnouncements());
 /* eslint-enable */
