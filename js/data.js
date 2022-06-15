@@ -15,8 +15,8 @@ const TITLES = [
 ];
 
 const PRICE = {
-  from: 99000,
-  to: 1000000
+  from: 3000,
+  to: 10000
 };
 
 const TYPES = [
@@ -34,7 +34,7 @@ const ROOMS = {
 
 const GUESTS = {
   from: 1,
-  to: 100
+  to: 20
 };
 
 const CHECKINS = [
@@ -84,9 +84,9 @@ const LOCATION = {
   digits: 5
 };
 
-const QUANTITY_ANNOUNCEMENT = 10;
+const QUANTITY_ANNOUNCEMENT = 1;
 
-function getRandomAvatar () {
+const getRandomAvatar = () => {
   const avatarSrc = [];
 
   for (let i = AVATAR.from; i <= AVATAR.to; i++) {
@@ -100,36 +100,34 @@ function getRandomAvatar () {
     avatarSrc.splice(randomIndex, 1);
     return randomAvatar;
   };
-}
+};
 
-function createAnnouncement (authorAvatar, locationLat, locationLng) {
-  return {
-    author: {
-      avatar: authorAvatar
-    },
-    offer: {
-      title: getRandomArrayElement(TITLES),
-      address: `${locationLat}, ${locationLng}`,
-      price: getRandomPositiveInteger(PRICE.from, PRICE.to),
-      type: getRandomArrayElement(TYPES),
-      rooms: getRandomPositiveInteger(ROOMS.from, ROOMS.to),
-      guests: getRandomPositiveInteger(GUESTS.from, GUESTS.to),
-      checkin: getRandomArrayElement(CHECKINS),
-      checkout: getRandomArrayElement(CHECKOUTS),
-      features: getRandomSlicedArray(FEATURES),
-      description: getRandomArrayElement(DESCRIPTIONS),
-      photos: getRandomSlicedArray(PHOTOS)
-    },
-    location: {
-      lat: locationLat,
-      lng: locationLng
-    }
-  };
-}
+const createAnnouncement = (authorAvatar, locationLat, locationLng) => ({
+  author: {
+    avatar: authorAvatar
+  },
+  offer: {
+    title: getRandomArrayElement(TITLES),
+    address: `${locationLat}, ${locationLng}`,
+    price: getRandomPositiveInteger(PRICE.from, PRICE.to),
+    type: getRandomArrayElement(TYPES),
+    rooms: getRandomPositiveInteger(ROOMS.from, ROOMS.to),
+    guests: getRandomPositiveInteger(GUESTS.from, GUESTS.to),
+    checkin: getRandomArrayElement(CHECKINS),
+    checkout: getRandomArrayElement(CHECKOUTS),
+    features: getRandomSlicedArray(FEATURES),
+    description: getRandomArrayElement(DESCRIPTIONS),
+    photos: getRandomSlicedArray(PHOTOS)
+  },
+  location: {
+    lat: locationLat,
+    lng: locationLng
+  }
+});
 
-function createSimilarAnnouncements () {
-  const similarAnnouncements = [];
+const createSimilarAnnouncements = () => {
   const randomAvatarSrc = getRandomAvatar();
+  const similarAnnouncements = [];
 
   for (let i = 1; i <= QUANTITY_ANNOUNCEMENT; i++) {
     const avatarImage = randomAvatarSrc();
@@ -140,6 +138,6 @@ function createSimilarAnnouncements () {
   }
 
   return similarAnnouncements;
-}
+};
 
 export {createSimilarAnnouncements};
