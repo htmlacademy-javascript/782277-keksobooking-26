@@ -84,7 +84,7 @@ const LOCATION = {
   digits: 5
 };
 
-const QUANTITY_ANNOUNCEMENT = 10;
+const QUANTITY_ADVERT = 10;
 
 const getRandomAvatar = () => {
   const avatarSrc = [];
@@ -102,7 +102,7 @@ const getRandomAvatar = () => {
   };
 };
 
-const createAnnouncement = (authorAvatar, locationLat, locationLng) => ({
+const createAdvertData = (authorAvatar, locationLat, locationLng) => ({
   author: {
     avatar: authorAvatar
   },
@@ -125,19 +125,19 @@ const createAnnouncement = (authorAvatar, locationLat, locationLng) => ({
   }
 });
 
-const createSimilarAnnouncements = () => {
+const createSimilarAdvertData = () => {
   const randomAvatarSrc = getRandomAvatar();
-  const similarAnnouncements = [];
+  const similarAdvert = [];
 
-  for (let i = 1; i <= QUANTITY_ANNOUNCEMENT; i++) {
+  for (let i = 1; i <= QUANTITY_ADVERT; i++) {
     const avatarImage = randomAvatarSrc();
     const latitude = getRandomPositiveFloat(LOCATION.lat.from, LOCATION.lat.to, LOCATION.digits);
     const longitude = getRandomPositiveFloat(LOCATION.lng.from, LOCATION.lng.to, LOCATION.digits);
-    const announcement = createAnnouncement(avatarImage, latitude, longitude);
-    similarAnnouncements.push(announcement);
+    const advert = createAdvertData(avatarImage, latitude, longitude);
+    similarAdvert.push(advert);
   }
 
-  return similarAnnouncements;
+  return similarAdvert;
 };
 
-export {createSimilarAnnouncements};
+export {createSimilarAdvertData};

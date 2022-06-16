@@ -1,7 +1,7 @@
 import {addElementData} from './util.js';
 
-const getHouseType = (announcementDataType) => {
-  switch (announcementDataType) {
+const getHouseType = (advertDataType) => {
+  switch (advertDataType) {
     case 'palace':
       return 'Дворец';
     case 'flat':
@@ -15,9 +15,9 @@ const getHouseType = (announcementDataType) => {
   }
 };
 
-const getHouseFeatures = (announcementTemplateFeatures, announcementDataFeatures) => {
-  announcementTemplateFeatures.forEach((templateFeature) => {
-    const isNecessary =  announcementDataFeatures.some(
+const getHouseFeatures = (advertTemplateFeatures, advertDataFeatures) => {
+  advertTemplateFeatures.forEach((templateFeature) => {
+    const isNecessary =  advertDataFeatures.some(
       (dataFeature) => templateFeature.classList.contains(`popup__feature--${dataFeature}`)
     );
 
@@ -27,50 +27,50 @@ const getHouseFeatures = (announcementTemplateFeatures, announcementDataFeatures
   });
 };
 
-const getHousePhotos = (announcementTemplatePhotos, announcementTemplatePhoto, announcementDataPhotos) => {
-  const announcementPhotoFragment = document.createDocumentFragment();
+const getHousePhotos = (advertTemplatePhotoList, advertTemplatePhoto, advertDataPhoto) => {
+  const photoFragment = document.createDocumentFragment();
 
-  announcementDataPhotos.forEach((photoSrc) => {
-    const templatePhoto = announcementTemplatePhoto.cloneNode(true);
+  advertDataPhoto.forEach((photoSrc) => {
+    const templatePhoto = advertTemplatePhoto.cloneNode(true);
     templatePhoto.src = photoSrc;
-    announcementPhotoFragment.append(templatePhoto);
+    photoFragment.append(templatePhoto);
   });
 
-  announcementTemplatePhotos.innerHTML = '';
-  announcementTemplatePhotos.append(announcementPhotoFragment);
+  advertTemplatePhotoList.innerHTML = '';
+  advertTemplatePhotoList.append(photoFragment);
 };
 
-const createAnnouncementPopup = ({
+const createAdvertPopup = ({
   author: {avatar},
   offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}
 }) => {
-  const announcementPopupTemplate = document.querySelector('#card').content.querySelector('.popup');
-  const announcement = announcementPopupTemplate.cloneNode(true);
+  const advertPopupTemplate = document.querySelector('#card').content.querySelector('.popup');
+  const advert = advertPopupTemplate.cloneNode(true);
 
-  const announcementAvatar = announcement.querySelector('.popup__avatar');
-  const announcementTitle = announcement.querySelector('.popup__title');
-  const announcementAddress = announcement.querySelector('.popup__text--address');
-  const announcementPrice = announcement.querySelector('.popup__text--price');
-  const announcementType = announcement.querySelector('.popup__type');
-  const announcementCapacity = announcement.querySelector('.popup__text--capacity');
-  const announcementTime = announcement.querySelector('.popup__text--time');
-  const announcementFeatures = announcement.querySelectorAll('.popup__feature');
-  const announcementDescription = announcement.querySelector('.popup__description');
-  const announcementPhotoList = announcement.querySelector('.popup__photos');
-  const announcementPhotoItem = announcementPhotoList.querySelector('.popup__photo');
+  const advertAvatar = advert.querySelector('.popup__avatar');
+  const advertTitle = advert.querySelector('.popup__title');
+  const advertAddress = advert.querySelector('.popup__text--address');
+  const advertPrice = advert.querySelector('.popup__text--price');
+  const advertType = advert.querySelector('.popup__type');
+  const advertCapacity = advert.querySelector('.popup__text--capacity');
+  const advertTime = advert.querySelector('.popup__text--time');
+  const advertFeatures = advert.querySelectorAll('.popup__feature');
+  const advertDescription = advert.querySelector('.popup__description');
+  const advertPhotoList = advert.querySelector('.popup__photos');
+  const advertPhotoItem = advertPhotoList.querySelector('.popup__photo');
 
-  addElementData(announcementAvatar, 'image', avatar);
-  addElementData(announcementTitle, 'text', title);
-  addElementData(announcementAddress, 'text', address);
-  addElementData(announcementPrice, 'text', `${price} ₽/ночь`);
-  addElementData(announcementType, 'text', getHouseType(type));
-  addElementData(announcementCapacity, 'text', `${rooms} комнаты для ${guests} гостей`);
-  addElementData(announcementTime, 'text', `Заезд после ${checkin}, выезд до ${checkout}`);
-  getHouseFeatures(announcementFeatures, features);
-  addElementData( announcementDescription, 'text', description);
-  getHousePhotos(announcementPhotoList, announcementPhotoItem, photos);
+  addElementData(advertAvatar, 'image', avatar);
+  addElementData(advertTitle, 'text', title);
+  addElementData(advertAddress, 'text', address);
+  addElementData(advertPrice, 'text', `${price} ₽/ночь`);
+  addElementData(advertType, 'text', getHouseType(type));
+  addElementData(advertCapacity, 'text', `${rooms} комнаты для ${guests} гостей`);
+  addElementData(advertTime, 'text', `Заезд после ${checkin}, выезд до ${checkout}`);
+  getHouseFeatures(advertFeatures, features);
+  addElementData( advertDescription, 'text', description);
+  getHousePhotos(advertPhotoList, advertPhotoItem, photos);
 
-  return announcement;
+  return advert;
 };
 
-export {createAnnouncementPopup};
+export {createAdvertPopup};
