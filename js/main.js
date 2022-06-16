@@ -1,6 +1,7 @@
-import {createAnnouncementPopup} from './announcement.js';
+import {createSimilarAnnouncements} from './data.js';
+import {createAnnouncementPopup} from './popup.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
-const POPUP_COUNT = 1;
+const announcementsData = createSimilarAnnouncements();
 
-mapCanvas.append(createAnnouncementPopup(POPUP_COUNT));
+mapCanvas.append(createAnnouncementPopup(announcementsData[0]));
