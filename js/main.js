@@ -1,5 +1,7 @@
 import {createSimilarAnnouncements} from './data.js';
+import {createAnnouncementPopup} from './popup.js';
 
-/* eslint-disable */
-console.log(createSimilarAnnouncements());
-/* eslint-enable */
+const mapCanvas = document.querySelector('#map-canvas');
+const announcementsData = createSimilarAnnouncements();
+
+mapCanvas.append(createAnnouncementPopup(announcementsData[0]));
