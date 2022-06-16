@@ -84,7 +84,7 @@ const LOCATION = {
   digits: 5
 };
 
-const QUANTITY_ANNOUNCEMENT = 1;
+const QUANTITY_ANNOUNCEMENT = 10;
 
 const getRandomAvatar = () => {
   const avatarSrc = [];
@@ -94,7 +94,7 @@ const getRandomAvatar = () => {
     avatarSrc.push(imageSrc);
   }
 
-  return function () {
+  return () => {
     const randomIndex = getRandomPositiveInteger(0, avatarSrc.length - 1);
     const randomAvatar = avatarSrc[randomIndex];
     avatarSrc.splice(randomIndex, 1);
