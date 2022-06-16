@@ -84,7 +84,7 @@ const LOCATION = {
   digits: 5
 };
 
-const QUANTITY_ANNOUNCEMENT = 1;
+const QUANTITY_ANNOUNCEMENT = 10;
 
 const getRandomAvatar = () => {
   const avatarSrc = [];
@@ -94,7 +94,7 @@ const getRandomAvatar = () => {
     avatarSrc.push(imageSrc);
   }
 
-  return function () {
+  return () => {
     const randomIndex = getRandomPositiveInteger(0, avatarSrc.length - 1);
     const randomAvatar = avatarSrc[randomIndex];
     avatarSrc.splice(randomIndex, 1);
@@ -125,11 +125,11 @@ const createAnnouncement = (authorAvatar, locationLat, locationLng) => ({
   }
 });
 
-const createSimilarAnnouncements = () => {
+const createSimilarAnnouncements = (similarAnnouncementsCount = QUANTITY_ANNOUNCEMENT) => {
   const randomAvatarSrc = getRandomAvatar();
   const similarAnnouncements = [];
 
-  for (let i = 1; i <= QUANTITY_ANNOUNCEMENT; i++) {
+  for (let i = 1; i <= similarAnnouncementsCount; i++) {
     const avatarImage = randomAvatarSrc();
     const latitude = getRandomPositiveFloat(LOCATION.lat.from, LOCATION.lat.to, LOCATION.digits);
     const longitude = getRandomPositiveFloat(LOCATION.lng.from, LOCATION.lng.to, LOCATION.digits);
