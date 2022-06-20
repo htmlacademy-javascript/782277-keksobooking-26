@@ -1,7 +1,9 @@
-import {createSimilarAnnouncements} from './data.js';
-import {createAnnouncementPopup} from './popup.js';
+import {createSimilarAdvertData} from './data.js';
+import {createAdvertPopup} from './popup.js';
+import {enablePage} from './form.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
-const announcementsData = createSimilarAnnouncements();
+const advertData = createSimilarAdvertData();
 
-mapCanvas.append(createAnnouncementPopup(announcementsData[0]));
+enablePage();
+mapCanvas.append(createAdvertPopup(advertData[0]));
