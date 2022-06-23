@@ -1,8 +1,8 @@
 import {createSimilarAdvertData} from './data.js';
-import {createAdvertPopup} from './advert-popup.js';
-import {disableAdvertForm, enableAdvertForm} from './advert-form.js';
-import {disableMapFilter, enableMapFilter} from './map-filter.js';
-import './advert-form-validation.js';
+import {createAdvertPopup} from './popup.js';
+import {disableAdvertForm, enableAdvertForm} from './form.js';
+import {disableMapFilter, enableMapFilter} from './filter.js';
+import './validation.js';
 
 disableMapFilter();
 disableAdvertForm();
