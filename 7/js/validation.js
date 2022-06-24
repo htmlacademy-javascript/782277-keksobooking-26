@@ -15,14 +15,9 @@ const priceOption = {
   maxPerNight: 100000
 };
 
-const roomOption = {
-  minRoom: 1,
+const capacityOption = {
+  notGuest: 0,
   maxRoom: 100
-};
-
-const guestOption = {
-  notForGuest: 0,
-  maxGuest: 3
 };
 
 const pristine = new Pristine(advertForm, {
@@ -37,7 +32,7 @@ const pristine = new Pristine(advertForm, {
 // Валидация заголовка объявления
 const validateTitle = (value) => value.length >= titleOption.minLength && value.length <= titleOption.maxLength;
 
-const createValidateTitleMessage = (value) => {
+const createTitleValidationMessage = (value) => {
   if (value.length <= titleOption.minLength) {
     return `Минимальная длинна заголовка ${titleOption.minLength} символов`;
   } else if (value.length >= titleOption.maxLength) {
@@ -45,12 +40,12 @@ const createValidateTitleMessage = (value) => {
   }
 };
 
-pristine.addValidator(advertFormTitle, validateTitle, createValidateTitleMessage);
+pristine.addValidator(advertFormTitle, validateTitle, createTitleValidationMessage);
 
 // Валидация цены за ночь
 const validatePrice = (value) => parseInt(value, 10) >= priceOption.minPerNight && parseInt(value, 10) <= priceOption.maxPerNight;
 
-const createValidatePriceMessage = (value) => {
+const createPriceValidationMessage = (value) => {
   if (parseInt(value, 10) < priceOption.minPerNight) {
     return `Минимальная цена за ночь ${priceOption.minPerNight} руб.`;
   } else if (parseInt(value, 10) >= priceOption.maxPerNight) {
@@ -58,46 +53,52 @@ const createValidatePriceMessage = (value) => {
   }
 };
 
-pristine.addValidator(advertFormPrice, validatePrice, createValidatePriceMessage);
+pristine.addValidator(advertFormPrice, validatePrice, createPriceValidationMessage);
 
 // Валидация соотношения комнат и гостей
-const validateCapacity = () => {
-  if (parseInt(advertFormRoom.value, 10) < roomOption.maxRoom && parseInt(advertFormGuest.value, 10) > guestOption.notForGuest) {
-    return parseInt(advertFormRoom.value, 10) >= parseInt(advertFormGuest.value, 10);
-  } else if (parseInt(advertFormRoom.value, 10) === roomOption.maxRoom && parseInt(advertFormGuest.value, 10) === guestOption.notForGuest) {
-    return true;
+const validateCapacity = (capacityValue) => {
+  switch (parseInt(capacityValue, 10)) {
+    case capacityOption.maxRoom:
+      return parseInt(advertFormGuest.value, 10) === capacityOption.notGuest;
+    case capacityOption.notGuest:
+      return parseInt(advertFormRoom.value, 10) === capacityOption.maxRoom;
+    default:
+      return parseInt(advertFormRoom.value, 10) >= parseInt(advertFormGuest.value, 10)
+      && parseInt(advertFormRoom.value, 10) !== capacityOption.maxRoom
+      && parseInt(advertFormGuest.value, 10) !== capacityOption.notGuest;
   }
 };
 
-const createValidateRoomMessage = () => {
+const createRoomValidationMessage = () => {
   if (parseInt(advertFormRoom.value, 10) < parseInt(advertFormGuest.value, 10)) {
     return 'Комната слишком мала';
-  } else if (parseInt(advertFormRoom.value, 10) === roomOption.maxRoom) {
-    return 'Вариант размещения не для гостей';
+  } else if (parseInt(advertFormRoom.value, 10) === capacityOption.maxRoom) {
+    return 'Выберете количество мест - не для гостей';
   }
+  return 'Попробуйте выбрать другой вариант';
 };
 
-const createValidateGuestMessage = () => {
+const createGuestValidationMessage = () => {
   if (parseInt(advertFormRoom.value, 10) < parseInt(advertFormGuest.value, 10)) {
     return 'Мест для гостей не достаточно';
-  } else if (parseInt(advertFormGuest.value, 10) === guestOption.notForGuest) {
-    return 'Вариант размещения 100 комнат';
+  } else if (parseInt(advertFormGuest.value, 10) === capacityOption.notGuest) {
+    return 'Выберете вариант размещения - 100 комнат';
   }
+  return 'Попробуйте выбрать другой вариант';
 };
 
-pristine.addValidator(advertFormRoom, validateCapacity, createValidateRoomMessage);
-pristine.addValidator(advertFormGuest, validateCapacity, createValidateGuestMessage);
+pristine.addValidator(advertFormRoom, validateCapacity, createRoomValidationMessage);
+pristine.addValidator(advertFormGuest, validateCapacity, createGuestValidationMessage);
 
 advertFormRoom.addEventListener('change', () => {
-  pristine.validate(advertFormRoom);
   pristine.validate(advertFormGuest);
 });
 
 advertFormGuest.addEventListener('change', () => {
   pristine.validate(advertFormRoom);
-  pristine.validate(advertFormGuest);
 });
 
+// Валидация всей формы
 advertForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
