@@ -1,7 +1,11 @@
-const advertForm = document.querySelector('.ad-form');
+import {getHouseType} from './popup.js';
 
+const advertForm = document.querySelector('.ad-form');
 const advertFormTitle = advertForm.querySelector('#title');
+const advertFormType = advertForm.querySelector('#type');
 const advertFormPrice = advertForm.querySelector('#price');
+const advertFormTimeIn = advertForm.querySelector('#timein');
+const advertFormTimeOut = advertForm.querySelector('#timeout');
 const advertFormRoom = advertForm.querySelector('#room_number');
 const advertFormGuest = advertForm.querySelector('#capacity');
 
@@ -11,7 +15,11 @@ const titleOption = {
 };
 
 const priceOption = {
-  minPerNight: 0,
+  'Бунгало': 0,
+  'Квартира': 1000,
+  'Отель': 3000,
+  'Дом': 5000,
+  'Дворец': 10000,
   maxPerNight: 100000
 };
 
@@ -42,18 +50,46 @@ const createTitleValidationMessage = (value) => {
 
 pristine.addValidator(advertFormTitle, validateTitle, createTitleValidationMessage);
 
+// Валидация соотношение типа жилья с ценой за ночь
+const getMinPricePerNight = () => {
+  const typeHousing = getHouseType(advertFormType.value);
+  return priceOption[typeHousing];
+};
+
+advertFormPrice.placeholder = getMinPricePerNight();
+
+advertFormType.addEventListener('change', () => {
+  advertFormPrice.placeholder = getMinPricePerNight();
+  pristine.validate(advertFormPrice);
+});
+
 // Валидация цены за ночь
-const validatePrice = (value) => parseInt(value, 10) >= priceOption.minPerNight && parseInt(value, 10) <= priceOption.maxPerNight;
+const validatePrice = (value) => parseInt(value, 10) >= getMinPricePerNight() && parseInt(value, 10) <= priceOption.maxPerNight;
 
 const createPriceValidationMessage = (value) => {
-  if (parseInt(value, 10) < priceOption.minPerNight) {
-    return `Минимальная цена за ночь ${priceOption.minPerNight} руб.`;
+  const minPricePerNight = getMinPricePerNight();
+  if (parseInt(value, 10) < minPricePerNight) {
+    return `Минимальная цена за ночь ${minPricePerNight} руб.`;
   } else if (parseInt(value, 10) >= priceOption.maxPerNight) {
     return `Максимальная цена за ночь ${priceOption.maxPerNight} руб.`;
   }
 };
 
 pristine.addValidator(advertFormPrice, validatePrice, createPriceValidationMessage);
+
+// Валидация соотношение времени заезда и выезда
+const synchronizeTimeInOut = (time) => {
+  advertFormTimeIn.value = time.value;
+  advertFormTimeOut.value = time.value;
+};
+
+advertFormTimeIn.addEventListener('change', (evt) => {
+  synchronizeTimeInOut(evt.target);
+});
+
+advertFormTimeOut.addEventListener('change', (evt) => {
+  synchronizeTimeInOut(evt.target);
+});
 
 // Валидация соотношения комнат и гостей
 const validateCapacity = (capacityValue) => {
