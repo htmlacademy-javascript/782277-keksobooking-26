@@ -87,17 +87,17 @@ const LOCATION = {
 const QUANTITY_ADVERT = 10;
 
 const getRandomAvatar = () => {
-  const avatarSrc = [];
+  const avatarSources = [];
 
   for (let i = AVATAR.from; i <= AVATAR.to; i++) {
-    const imageSrc = `img/avatars/user${i < 10 ? AVATAR.prefix + i : i}.png`;
-    avatarSrc.push(imageSrc);
+    const imageSource = `img/avatars/user${i < 10 ? AVATAR.prefix + i : i}.png`;
+    avatarSources.push(imageSource);
   }
 
   return () => {
-    const randomIndex = getRandomPositiveInteger(0, avatarSrc.length - 1);
-    const randomAvatar = avatarSrc[randomIndex];
-    avatarSrc.splice(randomIndex, 1);
+    const randomIndex = getRandomPositiveInteger(0, avatarSources.length - 1);
+    const randomAvatar = avatarSources[randomIndex];
+    avatarSources.splice(randomIndex, 1);
     return randomAvatar;
   };
 };
@@ -127,17 +127,17 @@ const createAdvertData = (authorAvatar, locationLat, locationLng) => ({
 
 const createSimilarAdvertData = () => {
   const randomAvatarSrc = getRandomAvatar();
-  const similarAdvert = [];
+  const similarAdverts = [];
 
   for (let i = 1; i <= QUANTITY_ADVERT; i++) {
     const avatarImage = randomAvatarSrc();
     const latitude = getRandomPositiveFloat(LOCATION.lat.from, LOCATION.lat.to, LOCATION.digits);
     const longitude = getRandomPositiveFloat(LOCATION.lng.from, LOCATION.lng.to, LOCATION.digits);
     const advert = createAdvertData(avatarImage, latitude, longitude);
-    similarAdvert.push(advert);
+    similarAdverts.push(advert);
   }
 
-  return similarAdvert;
+  return similarAdverts;
 };
 
 export {createSimilarAdvertData};

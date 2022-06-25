@@ -1,18 +1,18 @@
-const mapFilterForm = document.querySelector('.map__filters');
-const mapFilters = mapFilterForm.querySelectorAll('.map__filter, .map__features');
+const mapForm = document.querySelector('.map__filters');
+const mapFormFilters = mapForm.querySelectorAll('.map__filter, .map__features');
 
-const disableMapFilter = () => {
-  mapFilterForm.classList.add('map__filters--disabled');
-  mapFilters.forEach((filter) => {
+const disableMapForm = () => {
+  mapForm.classList.add('map__filters--disabled');
+  mapFormFilters.forEach((filter) => {
     filter.disabled = true;
   });
 };
 
-const enableMapFilter = () => {
-  mapFilterForm.classList.remove('map__filters--disabled');
-  mapFilters.forEach((filter) => {
+const enableMapForm = () => {
+  mapForm.classList.remove('map__filters--disabled');
+  mapFormFilters.forEach((filter) => {
     filter.disabled = false;
   });
 };
 
-export {disableMapFilter, enableMapFilter};
+export {disableMapForm, enableMapForm};
