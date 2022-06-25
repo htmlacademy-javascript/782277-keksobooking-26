@@ -1,13 +1,13 @@
 import {createSimilarAdvertData} from './data.js';
 import {createAdvertPopup} from './popup.js';
 import {disableAdvertForm, enableAdvertForm} from './form.js';
-import {disableMapFilter, enableMapFilter} from './filter.js';
+import {disableMapForm, enableMapForm} from './filter.js';
 import './validation.js';
 
-disableMapFilter();
+disableMapForm();
 disableAdvertForm();
 
-enableMapFilter();
+enableMapForm();
 enableAdvertForm();
 
 const mapCanvas = document.querySelector('#map-canvas');

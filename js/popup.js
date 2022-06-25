@@ -1,7 +1,7 @@
 import {addElementData} from './util.js';
 
-const getHouseType = (advertDataType) => {
-  switch (advertDataType) {
+const getHouseType = (dataTypes) => {
+  switch (dataTypes) {
     case 'palace':
       return 'Дворец';
     case 'flat':
@@ -15,9 +15,9 @@ const getHouseType = (advertDataType) => {
   }
 };
 
-const getHouseFeatures = (advertTemplateFeatures, advertDataFeatures) => {
-  advertTemplateFeatures.forEach((templateFeature) => {
-    const isNecessary =  advertDataFeatures.some(
+const getHouseFeatures = (templateFeatures, dataFeatures) => {
+  templateFeatures.forEach((templateFeature) => {
+    const isNecessary =  dataFeatures.some(
       (dataFeature) => templateFeature.classList.contains(`popup__feature--${dataFeature}`)
     );
 
@@ -27,17 +27,17 @@ const getHouseFeatures = (advertTemplateFeatures, advertDataFeatures) => {
   });
 };
 
-const getHousePhotos = (advertTemplatePhotoList, advertTemplatePhoto, advertDataPhoto) => {
+const getHousePhotos = (templatePhotos, templatePhoto, dataPhotos) => {
   const photoFragment = document.createDocumentFragment();
 
-  advertDataPhoto.forEach((photoSrc) => {
-    const templatePhoto = advertTemplatePhoto.cloneNode(true);
-    templatePhoto.src = photoSrc;
-    photoFragment.append(templatePhoto);
+  dataPhotos.forEach((photoSource) => {
+    const photo = templatePhoto.cloneNode(true);
+    photo.src = photoSource;
+    photoFragment.append(photo);
   });
 
-  advertTemplatePhotoList.innerHTML = '';
-  advertTemplatePhotoList.append(photoFragment);
+  templatePhotos.innerHTML = '';
+  templatePhotos.append(photoFragment);
 };
 
 const createAdvertPopup = ({
@@ -56,8 +56,8 @@ const createAdvertPopup = ({
   const advertTime = advert.querySelector('.popup__text--time');
   const advertFeatures = advert.querySelectorAll('.popup__feature');
   const advertDescription = advert.querySelector('.popup__description');
-  const advertPhotoList = advert.querySelector('.popup__photos');
-  const advertPhotoItem = advertPhotoList.querySelector('.popup__photo');
+  const advertPhotos = advert.querySelector('.popup__photos');
+  const advertPhoto = advertPhotos.querySelector('.popup__photo');
 
   addElementData(advertAvatar, 'image', avatar);
   addElementData(advertTitle, 'text', title);
@@ -68,7 +68,7 @@ const createAdvertPopup = ({
   addElementData(advertTime, 'text', `Заезд после ${checkin}, выезд до ${checkout}`);
   getHouseFeatures(advertFeatures, features);
   addElementData( advertDescription, 'text', description);
-  getHousePhotos(advertPhotoList, advertPhotoItem, photos);
+  getHousePhotos(advertPhotos, advertPhoto, photos);
 
   return advert;
 };
