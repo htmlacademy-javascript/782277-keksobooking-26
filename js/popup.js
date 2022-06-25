@@ -50,7 +50,7 @@ const createAdvertPopup = ({
   const advertAvatar = advert.querySelector('.popup__avatar');
   const advertTitle = advert.querySelector('.popup__title');
   const advertAddress = advert.querySelector('.popup__text--address');
-  const advertPrice = advert.querySelector('.popup__text--price');
+  const advertPrice = advert.querySelector('.js-popup__price');
   const advertType = advert.querySelector('.popup__type');
   const advertCapacity = advert.querySelector('.popup__text--capacity');
   const advertTime = advert.querySelector('.popup__text--time');
@@ -62,7 +62,7 @@ const createAdvertPopup = ({
   addElementData(advertAvatar, 'image', avatar);
   addElementData(advertTitle, 'text', title);
   addElementData(advertAddress, 'text', address);
-  addElementData(advertPrice, 'text', `${price} ₽/ночь`);
+  addElementData(advertPrice, 'text', price);
   addElementData(advertType, 'text', getHouseType(type));
   addElementData(advertCapacity, 'text', `${rooms} комнаты для ${guests} гостей`);
   addElementData(advertTime, 'text', `Заезд после ${checkin}, выезд до ${checkout}`);
