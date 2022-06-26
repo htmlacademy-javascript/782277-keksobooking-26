@@ -2,10 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
+  <title>Кексобукинг</title>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <title>Кексобукинг</title>
+  <link rel="stylesheet" href="leaflet/leaflet.css" crossorigin="">
 </head>
 <body>
 
@@ -19,7 +20,7 @@
     <section class="map">
 
       <!-- Блок для вставки карты -->
-      <div class="map__canvas" id="map-canvas"></div>
+      <div class="map__canvas" id="map-canvas" style="width: 100%; height: 500px;"></div>
 
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
@@ -91,7 +92,9 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text">
+          <input id="address" name="address" type="text" value="Широта, долгота: 35.68950, 139.69200" readonly required>
+          <input class="js-marker__latitude" type="hidden" name="latitude">
+          <input class="js-marker__longitude" type="hidden" name="longitude">
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
@@ -232,6 +235,7 @@
     </div>
   </template>
 
+  <script src="./leaflet/leaflet.js" crossorigin=""></script>
   <script src="./pristine/pristine.min.js"></script>
   <script src="./js/main.js" type="module"></script>
 </body>

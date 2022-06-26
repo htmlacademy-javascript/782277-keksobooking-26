@@ -9,7 +9,7 @@ const advertFormTimeOut = advertForm.querySelector('#timeout');
 const advertFormRoom = advertForm.querySelector('#room_number');
 const advertFormGuest = advertForm.querySelector('#capacity');
 
-const titleOption = {
+const TITLE_OPTION = {
   minLength: 30,
   maxLength: 100
 };
@@ -23,7 +23,7 @@ const priceOption = {
   maxPerNight: 100000
 };
 
-const capacityOption = {
+const CAPACITY_OPTION = {
   notGuest: 0,
   maxRoom: 100
 };
@@ -38,13 +38,13 @@ const pristine = new Pristine(advertForm, {
 });
 
 // Валидация заголовка объявления
-const validateTitle = (value) => value.length >= titleOption.minLength && value.length <= titleOption.maxLength;
+const validateTitle = (value) => value.length >= TITLE_OPTION.minLength && value.length <= TITLE_OPTION.maxLength;
 
 const createTitleValidationMessage = (value) => {
-  if (value.length <= titleOption.minLength) {
-    return `Минимальная длинна заголовка ${titleOption.minLength} символов`;
-  } else if (value.length >= titleOption.maxLength) {
-    return `Максимальная длинна заголовка ${titleOption.maxLength} символов`;
+  if (value.length <= TITLE_OPTION.minLength) {
+    return `Минимальная длинна заголовка ${TITLE_OPTION.minLength} символов`;
+  } else if (value.length >= TITLE_OPTION.maxLength) {
+    return `Максимальная длинна заголовка ${TITLE_OPTION.maxLength} символов`;
   }
 };
 
@@ -94,21 +94,21 @@ advertFormTimeOut.addEventListener('change', (evt) => {
 // Валидация соотношения комнат и гостей
 const validateCapacity = (capacityValue) => {
   switch (parseInt(capacityValue, 10)) {
-    case capacityOption.maxRoom:
-      return parseInt(advertFormGuest.value, 10) === capacityOption.notGuest;
-    case capacityOption.notGuest:
-      return parseInt(advertFormRoom.value, 10) === capacityOption.maxRoom;
+    case CAPACITY_OPTION.maxRoom:
+      return parseInt(advertFormGuest.value, 10) === CAPACITY_OPTION.notGuest;
+    case CAPACITY_OPTION.notGuest:
+      return parseInt(advertFormRoom.value, 10) === CAPACITY_OPTION.maxRoom;
     default:
       return parseInt(advertFormRoom.value, 10) >= parseInt(advertFormGuest.value, 10)
-      && parseInt(advertFormRoom.value, 10) !== capacityOption.maxRoom
-      && parseInt(advertFormGuest.value, 10) !== capacityOption.notGuest;
+      && parseInt(advertFormRoom.value, 10) !== CAPACITY_OPTION.maxRoom
+      && parseInt(advertFormGuest.value, 10) !== CAPACITY_OPTION.notGuest;
   }
 };
 
 const createRoomValidationMessage = () => {
   if (parseInt(advertFormRoom.value, 10) < parseInt(advertFormGuest.value, 10)) {
     return 'Комната слишком мала';
-  } else if (parseInt(advertFormRoom.value, 10) === capacityOption.maxRoom) {
+  } else if (parseInt(advertFormRoom.value, 10) === CAPACITY_OPTION.maxRoom) {
     return 'Выберете количество мест - не для гостей';
   }
   return 'Попробуйте выбрать другой вариант';
@@ -117,7 +117,7 @@ const createRoomValidationMessage = () => {
 const createGuestValidationMessage = () => {
   if (parseInt(advertFormRoom.value, 10) < parseInt(advertFormGuest.value, 10)) {
     return 'Мест для гостей не достаточно';
-  } else if (parseInt(advertFormGuest.value, 10) === capacityOption.notGuest) {
+  } else if (parseInt(advertFormGuest.value, 10) === CAPACITY_OPTION.notGuest) {
     return 'Выберете вариант размещения - 100 комнат';
   }
   return 'Попробуйте выбрать другой вариант';

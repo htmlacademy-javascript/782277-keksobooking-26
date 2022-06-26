@@ -1,5 +1,6 @@
 import {addElementData} from './util.js';
 
+// Возвращает тип жилья
 const getHouseType = (dataTypes) => {
   switch (dataTypes) {
     case 'palace':
@@ -15,6 +16,7 @@ const getHouseType = (dataTypes) => {
   }
 };
 
+// Удаляет из разметки преимущества жилья, на основе полученных данных
 const getHouseFeatures = (templateFeatures, dataFeatures) => {
   templateFeatures.forEach((templateFeature) => {
     const isNecessary =  dataFeatures.some(
@@ -27,6 +29,7 @@ const getHouseFeatures = (templateFeatures, dataFeatures) => {
   });
 };
 
+// Добавляет фото жилья
 const getHousePhotos = (templatePhotos, templatePhoto, dataPhotos) => {
   const photoFragment = document.createDocumentFragment();
 
@@ -40,6 +43,7 @@ const getHousePhotos = (templatePhotos, templatePhoto, dataPhotos) => {
   templatePhotos.append(photoFragment);
 };
 
+// Создает попап объявления на карте
 const createAdvertPopup = ({
   author: {avatar},
   offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}

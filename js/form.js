@@ -1,5 +1,8 @@
+import {resetMap} from './map.js';
+
 const advertForm = document.querySelector('.ad-form');
 const advertFormFieldsets = advertForm.querySelectorAll('fieldset');
+const advertFormReset = advertForm.querySelector('.ad-form__reset');
 
 const disableAdvertForm = () => {
   advertForm.classList.add('ad-form--disabled');
@@ -14,5 +17,9 @@ const enableAdvertForm = () => {
     fieldset.disabled = false;
   });
 };
+
+advertFormReset.addEventListener('click', () => {
+  resetMap();
+});
 
 export {disableAdvertForm, enableAdvertForm};
