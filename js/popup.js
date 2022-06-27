@@ -77,4 +77,4 @@ const createAdvertPopup = ({
   return advert;
 };
 
-export {createAdvertPopup, getHouseType};
+export {createAdvertPopup};

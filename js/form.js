@@ -1,25 +1,23 @@
-import {resetMap} from './map.js';
-
 const advertForm = document.querySelector('.ad-form');
 const advertFormFieldsets = advertForm.querySelectorAll('fieldset');
-const advertFormReset = advertForm.querySelector('.ad-form__reset');
+const advertFormSlider = advertForm.querySelector('.ad-form__slider');
 
+// Блокирует форму создания нового объявления и поля внутри
 const disableAdvertForm = () => {
   advertForm.classList.add('ad-form--disabled');
+  advertFormSlider.setAttribute('disabled', true);
   advertFormFieldsets.forEach((fieldset) => {
     fieldset.disabled = true;
   });
 };
 
+// Разблокирует форму создания нового объявления и поля внутри
 const enableAdvertForm = () => {
   advertForm.classList.remove('ad-form--disabled');
+  advertFormSlider.removeAttribute('disabled');
   advertFormFieldsets.forEach((fieldset) => {
     fieldset.disabled = false;
   });
 };
-
-advertFormReset.addEventListener('click', () => {
-  resetMap();
-});
 
 export {disableAdvertForm, enableAdvertForm};

@@ -4,9 +4,11 @@ import {createSimilarAdvertData} from './data.js';
 import {createAdvertPopup} from './popup.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
-const advertFormAddress = document.querySelector('#address');
-const mainMarkerLatitude = document.querySelector('.js-marker__latitude');
-const mainMarkerLongitude = document.querySelector('.js-marker__longitude');
+const advertForm = document.querySelector('.ad-form');
+const advertFormAddress = advertForm.querySelector('#address');
+const mainMarkerLatitude = advertForm.querySelector('.js-marker__latitude');
+const mainMarkerLongitude = advertForm.querySelector('.js-marker__longitude');
+const advertFormReset = advertForm.querySelector('.ad-form__reset');
 
 const COORDINATES_TOKYO = {
   lat: 35.6895,
@@ -45,8 +47,8 @@ disableAdvertForm();
 
 // Записывает переданные координаты в поле адрес и в скрытые поля формы
 const setAddress = ({lat, lng}) => {
-  const latitude = lat.toFixed(LOCATION_ACCURACY);
-  const longitude = lng.toFixed(LOCATION_ACCURACY);
+  const latitude = Number(lat.toFixed(LOCATION_ACCURACY));
+  const longitude = Number(lng.toFixed(LOCATION_ACCURACY));
   mainMarkerLatitude.value = latitude;
   mainMarkerLongitude.value = longitude;
   advertFormAddress.value = `Широта, долгота: ${latitude}, ${longitude}`;
@@ -135,4 +137,6 @@ const resetMap = () => {
     .setLatLng(COORDINATES_TOKYO);
 };
 
-export {resetMap};
+advertFormReset.addEventListener('click', () => {
+  resetMap();
+});
