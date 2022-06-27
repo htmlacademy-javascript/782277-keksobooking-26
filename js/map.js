@@ -1,6 +1,5 @@
-import {disableMapForm, enableMapForm} from './filter.js';
-import {disableAdvertForm, enableAdvertForm} from './form.js';
-import {createSimilarAdvertData} from './data.js';
+import {enableMapForm} from './filter.js';
+import {enableAdvertForm} from './form.js';
 import {createAdvertPopup} from './popup.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
@@ -19,33 +18,65 @@ const LOCATION_ACCURACY = 5;
 const MAP_ZOOM = 12;
 
 const MAIN_PIN = {
+  source: './img/main-pin.svg',
   width: 52,
-  height: 52
-};
-
-const MAIN_ANCHOR = {
-  center: MAIN_PIN.width / 2,
-  bottom:  MAIN_PIN.height
+  height: 52,
+  centerAnchor: 26,
+  bottomAnchor: 52
 };
 
 const ADVERT_PIN = {
+  source: './img/pin.svg',
   width: 40,
-  height: 40
+  height: 40,
+  centerAnchor: 20,
+  bottomAnchor: 40
 };
 
-const ADVERT_ANCHOR = {
-  center: ADVERT_PIN.width / 2,
-  bottom:  ADVERT_PIN.height
+// Создает карту Leaflet на основе данных openstreetmap
+const createMap = () => {
+  const map = L.map(mapCanvas)
+    .on('load', () => {
+      enableMapForm();
+      enableAdvertForm();
+    })
+    .setView({
+      lat: COORDINATES_TOKYO.lat,
+      lng: COORDINATES_TOKYO.lng
+    }, MAP_ZOOM);
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }
+  ).addTo(map);
+
+  return map;
 };
 
-const similarAdvertData = createSimilarAdvertData();
+// Создает иконку маркера
+const createMarkerIcon = ({source, width, height, centerAnchor, bottomAnchor}) => L.icon(
+  {
+    iconUrl: source,
+    iconSize: [width, height],
+    iconAnchor: [centerAnchor, bottomAnchor]
+  }
+);
 
-// Блокирует фильтр объявлений на карте
-disableMapForm();
-// Блокирует форму создания нового объявления
-disableAdvertForm();
+// Создает маркер
+const createMarker = (latitude, longitude, isDraggable, icon) => L.marker(
+  {
+    lat: latitude,
+    lng: longitude
+  },
+  {
+    draggable: isDraggable,
+    icon: icon
+  }
+);
 
-// Записывает переданные координаты в поле адрес и в скрытые поля формы
+// Записывает координаты в поле "адрес"
 const setAddress = ({lat, lng}) => {
   const latitude = Number(lat.toFixed(LOCATION_ACCURACY));
   const longitude = Number(lng.toFixed(LOCATION_ACCURACY));
@@ -54,89 +85,59 @@ const setAddress = ({lat, lng}) => {
   advertFormAddress.value = `${latitude}, ${longitude}`;
 };
 
-// Настройки карты Leaflet
-const map = L.map(mapCanvas)
-  .on('load', () => {
-    enableMapForm();
-    enableAdvertForm();
-  })
-  .setView({
-    lat: COORDINATES_TOKYO.lat,
-    lng: COORDINATES_TOKYO.lng
-  }, MAP_ZOOM);
+// Инициализирует карту
+const initialMap = (popupData) => {
+  const map = createMap();
 
-// Подключение openstreetmap карт
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }
-).addTo(map);
+  // Главный маркер
+  const mainMarkerIcon = createMarkerIcon(MAIN_PIN);
 
-// Настройка кастомной иконки главного маркера
-const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
-  iconSize: [MAIN_PIN.width, MAIN_PIN.height],
-  iconAnchor: [MAIN_ANCHOR.center, MAIN_ANCHOR.bottom]
-});
+  const mainMarker = createMarker(
+    COORDINATES_TOKYO.lat,
+    COORDINATES_TOKYO.lng,
+    true,
+    mainMarkerIcon
+  ).addTo(map);
 
-// Настройка главного маркера
-const mainPinMarker = L.marker(
-  {
-    lat: COORDINATES_TOKYO.lat,
-    lng: COORDINATES_TOKYO.lng
-  },
-  {
-    draggable: true,
-    icon: mainPinIcon
-  }
-).addTo(map);
+  mainMarker.on('moveend', (evt) => {
+    setAddress(evt.target.getLatLng());
+  });
 
-// Задает координаты в поле адрес, при передвижении главного маркера
-mainPinMarker.on('moveend', (evt) => {
-  setAddress(evt.target.getLatLng());
-});
+  // Маркеры с объявлениями
+  const markerGroup = L.layerGroup().addTo(map);
 
-// Настройка кастомной иконки маркера объявлений
-const advertPinIcon = L.icon({
-  iconUrl: './img/pin.svg',
-  iconSize: [ADVERT_PIN.width, ADVERT_PIN.height],
-  iconAnchor: [ADVERT_ANCHOR.center, ADVERT_ANCHOR.bottom]
-});
+  const advertMarkerIcon = createMarkerIcon(ADVERT_PIN);
 
-// Создаем слой с маркерами объявлений
-const markerGroup = L.layerGroup().addTo(map);
+  const createAdvertMarker = (data) => {
+    const advertMarker = createMarker(
+      data.location.lat,
+      data.location.lng,
+      false,
+      advertMarkerIcon
+    );
 
-// Настройка маркера объявления и попапа
-const createAdvertPinMarker = (data) => {
-  L.marker(
-    {
-      lat: data.location.lat,
-      lng: data.location.lng
-    },
-    {
-      draggable: false,
-      icon: advertPinIcon
-    }
-  )
-    .addTo(markerGroup)
-    .bindPopup(createAdvertPopup(data));
+    advertMarker
+      .addTo(markerGroup)
+      .bindPopup(createAdvertPopup(data));
+  };
+
+  // Создает маркер для каждого объявления
+  popupData.forEach((popup) => {
+    createAdvertMarker(popup);
+  });
+
+  // Возвращает карту в исходное состояние
+  const resetMap = () => {
+    map
+      .setView(COORDINATES_TOKYO, MAP_ZOOM)
+      .closePopup();
+    mainMarker
+      .setLatLng(COORDINATES_TOKYO);
+  };
+
+  advertFormReset.addEventListener('click', () => {
+    resetMap();
+  });
 };
 
-// Добавляет объявления на карту
-similarAdvertData.forEach((advertData) => {
-  createAdvertPinMarker(advertData);
-});
-
-// Возвращает карту в исходное состояние
-const resetMap = () => {
-  map
-    .setView(COORDINATES_TOKYO, MAP_ZOOM)
-    .closePopup();
-  mainPinMarker
-    .setLatLng(COORDINATES_TOKYO);
-};
-
-advertFormReset.addEventListener('click', () => {
-  resetMap();
-});
+export {initialMap};
