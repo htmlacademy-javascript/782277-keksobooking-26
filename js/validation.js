@@ -51,13 +51,7 @@ pristine.addValidator(advertFormTitle, validateTitle, createTitleValidationMessa
 
 // Валидация цены за ночь и соотношение с типом жилья
 const getMinPricePerNight = () => priceOption[advertFormType.value];
-
-const setInitialPriceValue = () => {
-  advertFormPrice.value = '';
-  advertFormPrice.placeholder = getMinPricePerNight();
-};
-
-setInitialPriceValue();
+advertFormPrice.placeholder = getMinPricePerNight();
 
 const validatePrice = (value) => {
   const price = Number(value);
@@ -77,7 +71,7 @@ const createPriceValidationMessage = (value) => {
 pristine.addValidator(advertFormPrice, validatePrice, createPriceValidationMessage);
 
 advertFormType.addEventListener('change', () => {
-  setInitialPriceValue();
+  advertFormPrice.placeholder = getMinPricePerNight();
   pristine.validate(advertFormPrice);
 });
 

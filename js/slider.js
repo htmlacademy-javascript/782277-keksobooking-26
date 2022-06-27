@@ -1,5 +1,4 @@
 const advertForm = document.querySelector('.ad-form');
-const advertFormType = advertForm.querySelector('#type');
 const advertFormPrice = advertForm.querySelector('#price');
 const advertFormSlider = advertForm.querySelector('.ad-form__slider');
 
@@ -27,18 +26,6 @@ noUiSlider.create(advertFormSlider, {
       return Number(parseFloat(value).toFixed(SLIDER_OPTIONS.accuracy));
     }
   }
-});
-
-// Устанавливает первоначальные настройки слайдера
-const setInitialSliderValue = () => {
-  advertFormSlider.noUiSlider.updateOptions({
-    start: SLIDER_OPTIONS.minPrice
-  });
-};
-
-// Отслеживает изменения поля "тип жилья" и устанавливает первоначальные настройки слайдера
-advertFormType.addEventListener('change', () => {
-  setInitialSliderValue();
 });
 
 // Отслеживает изменение в поле "цена за ночь" и изменяет положение слайдера
