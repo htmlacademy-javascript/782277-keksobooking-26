@@ -51,7 +51,7 @@ const setAddress = ({lat, lng}) => {
   const longitude = Number(lng.toFixed(LOCATION_ACCURACY));
   mainMarkerLatitude.value = latitude;
   mainMarkerLongitude.value = longitude;
-  advertFormAddress.value = `Широта, долгота: ${latitude}, ${longitude}`;
+  advertFormAddress.value = `${latitude}, ${longitude}`;
 };
 
 // Настройки карты Leaflet
