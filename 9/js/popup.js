@@ -44,37 +44,37 @@ const getHousePhotos = (templatePhotos, templatePhoto, dataPhotos) => {
 };
 
 // Создает попап объявления на карте
-const createAdvertPopup = ({
+const createPopup = ({
   author: {avatar},
   offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}
 }) => {
-  const advertPopupTemplate = document.querySelector('#card').content.querySelector('.popup');
-  const advert = advertPopupTemplate.cloneNode(true);
+  const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
+  const popup = popupTemplate.cloneNode(true);
 
-  const advertAvatar = advert.querySelector('.popup__avatar');
-  const advertTitle = advert.querySelector('.popup__title');
-  const advertAddress = advert.querySelector('.popup__text--address');
-  const advertPrice = advert.querySelector('.js-popup__price');
-  const advertType = advert.querySelector('.popup__type');
-  const advertCapacity = advert.querySelector('.popup__text--capacity');
-  const advertTime = advert.querySelector('.popup__text--time');
-  const advertFeatures = advert.querySelectorAll('.popup__feature');
-  const advertDescription = advert.querySelector('.popup__description');
-  const advertPhotos = advert.querySelector('.popup__photos');
-  const advertPhoto = advertPhotos.querySelector('.popup__photo');
+  const popupAvatar = popup.querySelector('.popup__avatar');
+  const popupTitle = popup.querySelector('.popup__title');
+  const popupAddress = popup.querySelector('.popup__text--address');
+  const popupPrice = popup.querySelector('.js-popup__price');
+  const popupType = popup.querySelector('.popup__type');
+  const popupCapacity = popup.querySelector('.popup__text--capacity');
+  const popupTime = popup.querySelector('.popup__text--time');
+  const popupFeatures = popup.querySelectorAll('.popup__feature');
+  const popupDescription = popup.querySelector('.popup__description');
+  const popupPhotos = popup.querySelector('.popup__photos');
+  const popupPhoto = popupPhotos.querySelector('.popup__photo');
 
-  addElementData(advertAvatar, 'image', avatar);
-  addElementData(advertTitle, 'text', title);
-  addElementData(advertAddress, 'text', address);
-  addElementData(advertPrice, 'text', price);
-  addElementData(advertType, 'text', getHouseType(type));
-  addElementData(advertCapacity, 'text', `${rooms} комнаты для ${guests} гостей`);
-  addElementData(advertTime, 'text', `Заезд после ${checkin}, выезд до ${checkout}`);
-  getHouseFeatures(advertFeatures, features);
-  addElementData( advertDescription, 'text', description);
-  getHousePhotos(advertPhotos, advertPhoto, photos);
+  addElementData(popupAvatar, 'image', avatar);
+  addElementData(popupTitle, 'text', title);
+  addElementData(popupAddress, 'text', address);
+  addElementData(popupPrice, 'text', price);
+  addElementData(popupType, 'text', getHouseType(type));
+  addElementData(popupCapacity, 'text', `${rooms} комнаты для ${guests} гостей`);
+  addElementData(popupTime, 'text', `Заезд после ${checkin}, выезд до ${checkout}`);
+  getHouseFeatures(popupFeatures, features);
+  addElementData( popupDescription, 'text', description);
+  getHousePhotos(popupPhotos, popupPhoto, photos);
 
-  return advert;
+  return popup;
 };
 
-export {createAdvertPopup};
+export {createPopup};

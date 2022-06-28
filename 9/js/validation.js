@@ -10,7 +10,7 @@ const advertFormGuest = advertForm.querySelector('#capacity');
 
 const TITLE_OPTION = {
   minLength: 30,
-  maxLength: 100
+  maxLength: 100,
 };
 
 const priceOption = {
@@ -19,12 +19,12 @@ const priceOption = {
   hotel: 3000,
   house: 5000,
   palace: 10000,
-  maxPerNight: 100000
+  maxPerNight: 100000,
 };
 
 const CAPACITY_OPTION = {
   notGuest: 0,
-  maxRoom: 100
+  maxRoom: 100,
 };
 
 const pristine = new Pristine(advertForm, {
@@ -33,7 +33,7 @@ const pristine = new Pristine(advertForm, {
   successClass: 'ad-form__element--valid',
   errorTextParent: 'ad-form__element',
   errorTextTag: 'span',
-  errorTextClass: 'ad-form__error'
+  errorTextClass: 'ad-form__error',
 });
 
 // Валидация заголовка объявления

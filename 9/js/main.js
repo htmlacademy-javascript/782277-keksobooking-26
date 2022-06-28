@@ -1,7 +1,7 @@
 import {createSimilarAdvertData} from './data.js';
 import {disableMapForm} from './filter.js';
 import {disableAdvertForm} from './form.js';
-import {initialMap} from './map.js';
+import {initializeMap} from './map.js';
 import './slider.js';
 import './validation.js';
 
@@ -14,4 +14,4 @@ disableMapForm();
 disableAdvertForm();
 
 // Инициализирует карту
-initialMap(popupData);
+initializeMap(popupData);

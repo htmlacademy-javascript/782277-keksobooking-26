@@ -9,7 +9,7 @@ const disableMapForm = () => {
   });
 };
 
-// Разблокирует форму с фильтрами и фильтры внутри
+// Активирует форму с фильтрами и фильтры внутри
 const enableMapForm = () => {
   mapForm.classList.remove('map__filters--disabled');
   mapFormFilters.forEach((filter) => {

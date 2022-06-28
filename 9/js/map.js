@@ -1,6 +1,6 @@
 import {enableMapForm} from './filter.js';
 import {enableAdvertForm} from './form.js';
-import {createAdvertPopup} from './popup.js';
+import {createPopup} from './popup.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
 const advertForm = document.querySelector('.ad-form');
@@ -11,7 +11,7 @@ const advertFormReset = advertForm.querySelector('.ad-form__reset');
 
 const COORDINATES_TOKYO = {
   lat: 35.6895,
-  lng: 139.692
+  lng: 139.692,
 };
 
 const LOCATION_ACCURACY = 5;
@@ -22,7 +22,7 @@ const MAIN_PIN = {
   width: 52,
   height: 52,
   centerAnchor: 26,
-  bottomAnchor: 52
+  bottomAnchor: 52,
 };
 
 const ADVERT_PIN = {
@@ -30,7 +30,7 @@ const ADVERT_PIN = {
   width: 40,
   height: 40,
   centerAnchor: 20,
-  bottomAnchor: 40
+  bottomAnchor: 40,
 };
 
 // Создает карту Leaflet на основе данных openstreetmap
@@ -42,13 +42,13 @@ const createMap = () => {
     })
     .setView({
       lat: COORDINATES_TOKYO.lat,
-      lng: COORDINATES_TOKYO.lng
+      lng: COORDINATES_TOKYO.lng,
     }, MAP_ZOOM);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }
   ).addTo(map);
 
@@ -60,7 +60,7 @@ const createMarkerIcon = ({source, width, height, centerAnchor, bottomAnchor}) =
   {
     iconUrl: source,
     iconSize: [width, height],
-    iconAnchor: [centerAnchor, bottomAnchor]
+    iconAnchor: [centerAnchor, bottomAnchor],
   }
 );
 
@@ -68,11 +68,11 @@ const createMarkerIcon = ({source, width, height, centerAnchor, bottomAnchor}) =
 const createMarker = (latitude, longitude, isDraggable, icon) => L.marker(
   {
     lat: latitude,
-    lng: longitude
+    lng: longitude,
   },
   {
     draggable: isDraggable,
-    icon: icon
+    icon: icon,
   }
 );
 
@@ -86,7 +86,7 @@ const setAddress = ({lat, lng}) => {
 };
 
 // Инициализирует карту
-const initialMap = (popupData) => {
+const initializeMap = (popupData) => {
   const map = createMap();
 
   // Главный маркер
@@ -99,7 +99,7 @@ const initialMap = (popupData) => {
     mainMarkerIcon
   ).addTo(map);
 
-  mainMarker.on('moveend', (evt) => {
+  mainMarker.on('move', (evt) => {
     setAddress(evt.target.getLatLng());
   });
 
@@ -118,7 +118,7 @@ const initialMap = (popupData) => {
 
     advertMarker
       .addTo(markerGroup)
-      .bindPopup(createAdvertPopup(data));
+      .bindPopup(createPopup(data));
   };
 
   // Создает маркер для каждого объявления
@@ -140,4 +140,4 @@ const initialMap = (popupData) => {
   });
 };
 
-export {initialMap};
+export {initializeMap};
