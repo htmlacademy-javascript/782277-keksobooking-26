@@ -2,28 +2,28 @@ const advertForm = document.querySelector('.ad-form');
 const advertFormPrice = advertForm.querySelector('#price');
 const advertFormSlider = advertForm.querySelector('.ad-form__slider');
 
-const SLIDER_OPTIONS = {
-  minPrice: 0,
-  maxPrice: 100000,
+const SLIDER = {
+  min: 0,
+  max: 100000,
   step: 100,
-  accuracy: 0
+  accuracy: 0,
 };
 
 // Создает и настраивает слайдер
 noUiSlider.create(advertFormSlider, {
   range: {
-    min: SLIDER_OPTIONS.minPrice,
-    max: SLIDER_OPTIONS.maxPrice
+    min: SLIDER.min,
+    max: SLIDER.max,
   },
-  start: SLIDER_OPTIONS.minPrice,
-  step: SLIDER_OPTIONS.step,
+  start: SLIDER.min,
+  step: SLIDER.step,
   connect: 'lower',
   format: {
     to: function (value) {
-      return Number(value.toFixed(SLIDER_OPTIONS.accuracy));
+      return Number(value.toFixed(SLIDER.accuracy));
     },
     from: function (value) {
-      return Number(parseFloat(value).toFixed(SLIDER_OPTIONS.accuracy));
+      return Number(parseFloat(value).toFixed(SLIDER.accuracy));
     }
   }
 });

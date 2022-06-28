@@ -1,9 +1,9 @@
-import {getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getRandomSlicedArray} from './util.js';
+import { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getRandomSlicedArray } from './util.js';
 
 const AVATAR = {
   from: 1,
   to: 10,
-  prefix: '0'
+  prefix: '0',
 };
 
 const TITLES = [
@@ -11,12 +11,12 @@ const TITLES = [
   'Квартира в центре столицы',
   'Квартира на берегу моря',
   'Уютный дом в лесу',
-  'Апартаменты'
+  'Апартаменты',
 ];
 
 const PRICE = {
   from: 3000,
-  to: 10000
+  to: 10000,
 };
 
 const TYPES = [
@@ -24,29 +24,29 @@ const TYPES = [
   'flat',
   'house',
   'bungalow',
-  'hotel'
+  'hotel',
 ];
 
 const ROOMS = {
   from: 1,
-  to: 10
+  to: 10,
 };
 
 const GUESTS = {
   from: 1,
-  to: 20
+  to: 20,
 };
 
 const CHECKINS = [
   '12:00',
   '13:00',
-  '14:00'
+  '14:00',
 ];
 
 const CHECKOUTS = [
   '12:00',
   '13:00',
-  '14:00'
+  '14:00',
 ];
 
 const FEATURES = [
@@ -55,7 +55,7 @@ const FEATURES = [
   'parking',
   'washer',
   'elevator',
-  'conditioner'
+  'conditioner',
 ];
 
 const DESCRIPTIONS = [
@@ -63,23 +63,23 @@ const DESCRIPTIONS = [
   'Развитая инфраструктура',
   'Комфортная зона для встреч',
   'Паркинг для автомобилей',
-  'Огромный лесной массив'
+  'Огромный лесной массив',
 ];
 
 const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
 const LOCATION = {
   lat: {
     from: 35.65000,
-    to: 35.70000
+    to: 35.70000,
   },
   lng: {
     from: 139.70000,
-    to: 139.80000
+    to: 139.80000,
   },
   digits: 5
 };

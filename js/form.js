@@ -11,7 +11,7 @@ const disableAdvertForm = () => {
   });
 };
 
-// Разблокирует форму создания нового объявления и поля внутри
+// Активирует форму создания нового объявления и поля внутри
 const enableAdvertForm = () => {
   advertForm.classList.remove('ad-form--disabled');
   advertFormSlider.removeAttribute('disabled');
