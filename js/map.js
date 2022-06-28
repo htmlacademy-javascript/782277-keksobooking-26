@@ -86,7 +86,7 @@ const setAddress = ({lat, lng}) => {
 };
 
 // Инициализирует карту
-const initialMap = (popupData) => {
+const initializeMap = (popupData) => {
   const map = createMap();
 
   // Главный маркер
@@ -99,7 +99,7 @@ const initialMap = (popupData) => {
     mainMarkerIcon
   ).addTo(map);
 
-  mainMarker.on('moveend', (evt) => {
+  mainMarker.on('move', (evt) => {
     setAddress(evt.target.getLatLng());
   });
 
@@ -140,4 +140,4 @@ const initialMap = (popupData) => {
   });
 };
 
-export {initialMap};
+export {initializeMap};
