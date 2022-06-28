@@ -1,16 +1,17 @@
 import {createSimilarAdvertData} from './data.js';
-import {createAdvertPopup} from './popup.js';
-import {disableAdvertForm, enableAdvertForm} from './form.js';
-import {disableMapForm, enableMapForm} from './filter.js';
+import {disableMapForm} from './filter.js';
+import {disableAdvertForm} from './form.js';
+import {initializeMap} from './map.js';
+import './slider.js';
 import './validation.js';
 
+const popupData = createSimilarAdvertData();
+
+// Блокирует форму с фильтрами объявлений
 disableMapForm();
+
+// Блокирует форму создания нового объявления
 disableAdvertForm();
 
-enableMapForm();
-enableAdvertForm();
-
-const mapCanvas = document.querySelector('#map-canvas');
-const advertData = createSimilarAdvertData();
-
-mapCanvas.append(createAdvertPopup(advertData[0]));
+// Инициализирует карту
+initializeMap(popupData);

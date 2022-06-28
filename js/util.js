@@ -1,6 +1,7 @@
 // Вспомогательные функции getRandomPositiveInteger и getRandomPositiveFloat принес на хвосте Кекс
 // Источник - https://up.htmlacademy.ru/profession/frontender/13/javascript/26/tasks/8
 
+// Возвращает целое случайное число из диапазона
 const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -8,6 +9,7 @@ const getRandomPositiveInteger = (a, b) => {
   return Math.floor(result);
 };
 
+// Возвращает случайное число с плавающей точкой из диапазона
 const getRandomPositiveFloat = (a, b, digits = 1) => {
   const lower = Math.min(Math.abs(a), Math.abs(b));
   const upper = Math.max(Math.abs(a), Math.abs(b));
@@ -15,8 +17,10 @@ const getRandomPositiveFloat = (a, b, digits = 1) => {
   return +result.toFixed(digits);
 };
 
+// Возвращает случайный элемент из массива
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
+// Возвращает массив случайной длинны со случайными элементами
 const getRandomSlicedArray = (elements) => {
   const randomSlicedArray = [];
   const randomSlicedArrayLength = getRandomPositiveInteger(1, elements.length);
@@ -29,6 +33,7 @@ const getRandomSlicedArray = (elements) => {
   return randomSlicedArray;
 };
 
+// Добавляет данные DOM-элементу в зависимости от типа, если данных нет => скрывает DOM-элемент
 const addElementData = (element, elementProperty, elementData) => {
   if (elementData && elementProperty === 'image') {
     element.src = elementData;

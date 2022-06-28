@@ -1035,3 +1035,33 @@ fieldset {
 .hidden {
   display: none;
 }
+
+.ad-form__error {
+  color: #ff5635;
+}
+
+.ad-form__element--invalid input,
+.ad-form__element--invalid select,
+.ad-form__element--invalid textarea {
+  border-color: #ff5635;
+}
+
+.ad-form__element--invalid input:focus,
+.ad-form__element--invalid select:focus,
+.ad-form__element--invalid textarea:focus {
+  -webkit-box-shadow: 0 0 2px 2px #ff5635;
+          box-shadow: 0 0 2px 2px #ff5635;
+}
+
+.ad-form__element--valid input,
+.ad-form__element--valid select,
+.ad-form__element--valid textarea {
+  border-color: #00ff00;
+}
+
+.ad-form__element--valid input:focus,
+.ad-form__element--valid select:focus,
+.ad-form__element--valid textarea:focus {
+  -webkit-box-shadow: 0 0 2px 2px #00ff00;
+          box-shadow: 0 0 2px 2px #00ff00;
+}
