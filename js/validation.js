@@ -1,3 +1,9 @@
+import {sendData} from './data.js';
+import {resetMap} from './map.js';
+import {resetMapFilter} from './filter.js';
+import {resetAdvertForm} from './form.js';
+import {resetSlider} from './slider.js';
+
 const advertForm = document.querySelector('.ad-form');
 const advertFormTitle = advertForm.querySelector('#title');
 const advertFormType = advertForm.querySelector('#type');
@@ -7,6 +13,8 @@ const advertFormTimeIn = advertForm.querySelector('#timein');
 const advertFormTimeOut = advertForm.querySelector('#timeout');
 const advertFormRoom = advertForm.querySelector('#room_number');
 const advertFormGuest = advertForm.querySelector('#capacity');
+const advertFormSubmit = advertForm.querySelector('.ad-form__submit');
+const advertFormReset = advertForm.querySelector('.ad-form__reset');
 
 const TITLE_OPTION = {
   minLength: 30,
@@ -140,15 +148,51 @@ advertFormGuest.addEventListener('change', () => {
   pristine.validate(advertFormRoom);
 });
 
-// Валидация всей формы
-advertForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+// Блокировка кнопки "опубликовать"
+const blockSubmitButton = () => {
+  advertFormSubmit.disabled = true;
+  advertFormSubmit.textContent = 'Публикую...';
+};
 
-  // const isValid = pristine.validate();
-  // if (isValid) {
-  //   console.log('Можно отправлять');
-  // } else {
-  //   console.log('Форма невалидна');
-  // }
+const unblockSubmitButton = () => {
+  advertFormSubmit.disabled = false;
+  advertFormSubmit.textContent = 'Опубликовать';
+};
+
+// Возвращает страницу в исходное состояние
+const resetPage = () => {
+  resetMap();
+  resetMapFilter();
+  resetAdvertForm();
+  resetSlider();
+};
+
+advertFormReset.addEventListener('click', () => {
+  resetPage();
 });
+
+// Валидация всей формы
+const setAdvertFormSubmit = (onSuccess, onError) => {
+  advertForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(
+        () => {
+          onSuccess();
+          unblockSubmitButton();
+          resetPage();
+        },
+        () => {
+          onError();
+          unblockSubmitButton();
+        },
+        new FormData(evt.target)
+      );
+    }
+  });
+};
+
+export {setAdvertFormSubmit};

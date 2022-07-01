@@ -20,4 +20,6 @@ const enableAdvertForm = () => {
   });
 };
 
-export {disableAdvertForm, enableAdvertForm};
+const resetAdvertForm = () => advertForm.reset();
+
+export {disableAdvertForm, enableAdvertForm, resetAdvertForm};

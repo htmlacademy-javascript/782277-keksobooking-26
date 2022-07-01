@@ -37,3 +37,9 @@ advertFormPrice.addEventListener('input', () => {
 advertFormSlider.noUiSlider.on('slide', () => {
   advertFormPrice.value = advertFormSlider.noUiSlider.get();
 });
+
+const resetSlider = () => {
+  advertFormSlider.noUiSlider.set(SLIDER.min);
+};
+
+export {resetSlider};

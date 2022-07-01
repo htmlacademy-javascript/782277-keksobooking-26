@@ -1065,3 +1065,66 @@ fieldset {
   -webkit-box-shadow: 0 0 2px 2px #00ff00;
           box-shadow: 0 0 2px 2px #00ff00;
 }
+
+.notice-message {
+  z-index: 1100;
+  position: absolute;
+  top: 50%;
+  right: 25%;
+  left: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 20px 100px;
+  background-color: #f0f0ea;
+  transform: translateY(-50%);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.notice-message::before,
+.notice-message::after {
+  position: absolute;
+  top: 50%;
+  content: "";
+  width: 39px;
+  height: 43px;
+  background-image: url("../img/muffin-red.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: translateY(-50%);
+}
+
+.notice-message::before {
+  left: 5%;
+}
+
+.notice-message::after {
+  right: 5%;
+}
+
+.notice-message__text,
+.notice-message__server {
+  margin: 10px;
+}
+
+.notice-message__button {
+  padding: 10px;
+  font-family: "Roboto", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: 0;
+}
+
+.notice-message__button:hover,
+.notice-message__button:active {
+  background-color: #c7c7c7;
+}
+
+.notice-message__button:disabled {
+  opacity: 0.3;
+}
