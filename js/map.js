@@ -106,7 +106,7 @@ mainMarker.on('move', (evt) => {
   setAddressCoordinates(evt.target.getLatLng());
 });
 
-// Маркер объявления
+// Маркер объявлений
 const markerGroup = L.layerGroup().addTo(map);
 
 const createAdvertMarker = (data) => {
