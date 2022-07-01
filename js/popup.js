@@ -1,8 +1,26 @@
-import {addElementData} from './util.js';
+// Добавляет source DOM-элементу
+// Если данных нет, то скрывает DOM-элемент
+const addElementSrc = (element, elementSrc) => {
+  if (elementSrc) {
+    element.src = elementSrc;
+  } else {
+    element.classList.add('hidden');
+  }
+};
+
+// Добавляет textContent DOM-элементу
+// Если данных нет, то скрывает DOM-элемент
+const addElementData = (element, elementData) => {
+  if (elementData) {
+    element.textContent = elementData;
+  } else {
+    element.classList.add('hidden');
+  }
+};
 
 // Возвращает тип жилья
-const getHouseType = (dataTypes) => {
-  switch (dataTypes) {
+const getHouseType = (houseType) => {
+  switch (houseType) {
     case 'palace':
       return 'Дворец';
     case 'flat':
@@ -16,31 +34,41 @@ const getHouseType = (dataTypes) => {
   }
 };
 
-// Удаляет из разметки преимущества жилья, на основе полученных данных
-const getHouseFeatures = (templateFeatures, dataFeatures) => {
-  templateFeatures.forEach((templateFeature) => {
-    const isNecessary =  dataFeatures.some(
-      (dataFeature) => templateFeature.classList.contains(`popup__feature--${dataFeature}`)
-    );
+// Добавляет преимущества жилья, на основе полученных данных
+// Если данных нет, то скрывает поле с преимуществами
+const getHouseFeatures = (templateFeatureList, templateFeatures, dataFeatures) => {
+  if (dataFeatures) {
+    templateFeatures.forEach((templateFeature) => {
+      const isNecessary =  dataFeatures.some(
+        (dataFeature) => templateFeature.classList.contains(`popup__feature--${dataFeature}`)
+      );
 
-    if (!isNecessary) {
-      templateFeature.remove();
-    }
-  });
+      if (!isNecessary) {
+        templateFeature.remove();
+      }
+    });
+  } else {
+    templateFeatureList.classList.add('hidden');
+  }
 };
 
 // Добавляет фото жилья
-const getHousePhotos = (templatePhotos, templatePhoto, dataPhotos) => {
-  const photoFragment = document.createDocumentFragment();
+// Если данных нет, то скрывает поле с фотографиями
+const getHousePhotos = (templatePhotoList, templatePhoto, dataPhotos) => {
+  if (dataPhotos) {
+    const photoFragment = document.createDocumentFragment();
 
-  dataPhotos.forEach((photoSource) => {
-    const photo = templatePhoto.cloneNode(true);
-    photo.src = photoSource;
-    photoFragment.append(photo);
-  });
+    dataPhotos.forEach((photoSource) => {
+      const photo = templatePhoto.cloneNode(true);
+      photo.src = photoSource;
+      photoFragment.append(photo);
+    });
 
-  templatePhotos.innerHTML = '';
-  templatePhotos.append(photoFragment);
+    templatePhotoList.innerHTML = '';
+    templatePhotoList.append(photoFragment);
+  } else {
+    templatePhotoList.classList.add('hidden');
+  }
 };
 
 // Создает попап объявления на карте
@@ -58,21 +86,22 @@ const createPopup = ({
   const popupType = popup.querySelector('.popup__type');
   const popupCapacity = popup.querySelector('.popup__text--capacity');
   const popupTime = popup.querySelector('.popup__text--time');
+  const popupFeatureList = popup.querySelector('.popup__features');
   const popupFeatures = popup.querySelectorAll('.popup__feature');
   const popupDescription = popup.querySelector('.popup__description');
-  const popupPhotos = popup.querySelector('.popup__photos');
-  const popupPhoto = popupPhotos.querySelector('.popup__photo');
+  const popupPhotoList = popup.querySelector('.popup__photos');
+  const popupPhoto = popupPhotoList.querySelector('.popup__photo');
 
-  addElementData(popupAvatar, 'image', avatar);
-  addElementData(popupTitle, 'text', title);
-  addElementData(popupAddress, 'text', address);
-  addElementData(popupPrice, 'text', price);
-  addElementData(popupType, 'text', getHouseType(type));
-  addElementData(popupCapacity, 'text', `${rooms} комнаты для ${guests} гостей`);
-  addElementData(popupTime, 'text', `Заезд после ${checkin}, выезд до ${checkout}`);
-  getHouseFeatures(popupFeatures, features);
-  addElementData( popupDescription, 'text', description);
-  getHousePhotos(popupPhotos, popupPhoto, photos);
+  addElementSrc(popupAvatar, avatar);
+  addElementData(popupTitle, title);
+  addElementData(popupAddress, address);
+  addElementData(popupPrice, price);
+  addElementData(popupType, getHouseType(type));
+  addElementData(popupCapacity, `${rooms} комнаты для ${guests} гостей`);
+  addElementData(popupTime, `Заезд после ${checkin}, выезд до ${checkout}`);
+  getHouseFeatures(popupFeatureList, popupFeatures, features);
+  addElementData(popupDescription, description);
+  getHousePhotos(popupPhotoList, popupPhoto, photos);
 
   return popup;
 };

@@ -1,17 +1,23 @@
-import {createSimilarAdvertData} from './data.js';
-import {disableMapForm} from './filter.js';
-import {disableAdvertForm} from './form.js';
-import {initializeMap} from './map.js';
-import './slider.js';
-import './validation.js';
+import {getData} from './data.js';
+import {setAdvertFormSubmit} from './validation.js';
+import {createMarkerForAdvert} from './map.js';
+import {disableMapFilter} from './filter.js';
+import {createNotice, createSuccessMessage, createErrorMessage} from './notice.js';
 
-const popupData = createSimilarAdvertData();
+const MAX_ADVERTS = 10;
 
-// Блокирует форму с фильтрами объявлений
-disableMapForm();
+// Получаем данные от сервера
+// Отрисовываем объявления на карте
+// Иначе показываем сообщение об ошибке
+getData(
+  (adverts) => createMarkerForAdvert(adverts.slice(0, MAX_ADVERTS)),
+  (message) => {
+    disableMapFilter();
+    createNotice(message);
+  }
+);
 
-// Блокирует форму создания нового объявления
-disableAdvertForm();
-
-// Инициализирует карту
-initializeMap(popupData);
+// Отправляем форму
+// Показываем сообщение об успешной отправке
+// Иначе показываем сообщение об ошибке
+setAdvertFormSubmit(createSuccessMessage, createErrorMessage);
