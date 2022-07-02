@@ -1106,7 +1106,7 @@ fieldset {
 }
 
 .notice-message__text,
-.notice-message__server {
+.notice-message__error {
   margin: 10px;
 }
 

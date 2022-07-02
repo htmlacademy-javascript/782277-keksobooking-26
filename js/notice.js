@@ -3,14 +3,14 @@ const mapCanvas = document.querySelector('#map-canvas');
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const createNotice = (serverMessage) => {
+const createNotice = (message) => {
   const noticeTemplate = document.querySelector('#notice-message').content.querySelector('.notice-message');
   const notice = noticeTemplate.cloneNode(true);
-  const noticeServerMessage = notice.querySelector('.notice-message__server');
+  const noticeError = notice.querySelector('.notice-message__error');
   const noticeButton = notice.querySelector('.notice-message__button');
 
-  if (serverMessage) {
-    noticeServerMessage.textContent = serverMessage;
+  if (message) {
+    noticeError.textContent = message;
   }
 
   noticeButton.addEventListener('click', () => {
