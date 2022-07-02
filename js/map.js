@@ -1,5 +1,5 @@
 import {disableMapFilter, enableMapFilter} from './filter.js';
-import {disableAdvertForm, enableAdvertForm} from './form.js';
+import {enableAdvertForm} from './form.js';
 import {createPopup} from './popup.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
@@ -8,13 +8,10 @@ const advertFormAddress = advertForm.querySelector('#address');
 const mainMarkerLatitude = advertForm.querySelector('.js-marker__latitude');
 const mainMarkerLongitude = advertForm.querySelector('.js-marker__longitude');
 
-const COORDINATES_TOKYO = {
-  lat: 35.6895,
-  lng: 139.692,
+const MAP_OPTION = {
+  accuracy: 5,
+  zoom: 12,
 };
-
-const LOCATION_ACCURACY = 5;
-const MAP_ZOOM = 12;
 
 const MAIN_MARKER = {
   source: './img/main-pin.svg',
@@ -32,14 +29,16 @@ const ADVERT_MARKER = {
   bottomAnchor: 40,
 };
 
-// Блокирует фильтрацию объявлений
-// Блокирует форму создания нового объявления
-disableMapFilter();
-disableAdvertForm();
+const COORDINATES_TOKYO = {
+  lat: 35.6895,
+  lng: 139.692,
+};
+
+const map = L.map(mapCanvas);
 
 // Инициализирует карту Leaflet на основе данных openstreetmap
 const initializeMap = () => {
-  const initialMap = L.map(mapCanvas)
+  map
     .on('load', () => {
       enableMapFilter();
       enableAdvertForm();
@@ -47,19 +46,15 @@ const initializeMap = () => {
     .setView({
       lat: COORDINATES_TOKYO.lat,
       lng: COORDINATES_TOKYO.lng,
-    }, MAP_ZOOM);
+    }, MAP_OPTION.zoom);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }
-  ).addTo(initialMap);
-
-  return initialMap;
+  ).addTo(map);
 };
-
-const map = initializeMap();
 
 // Создает иконку маркера
 const createMarkerIcon = ({source, width, height, centerAnchor, bottomAnchor}) => L.icon(
@@ -95,8 +90,8 @@ const mainMarker = createMarker(
 
 // Записывает координаты в поле "адрес"
 const setAddressCoordinates = ({lat, lng}) => {
-  const latitude = Number(lat.toFixed(LOCATION_ACCURACY));
-  const longitude = Number(lng.toFixed(LOCATION_ACCURACY));
+  const latitude = Number(lat.toFixed(MAP_OPTION.accuracy));
+  const longitude = Number(lng.toFixed(MAP_OPTION.accuracy));
   mainMarkerLatitude.value = latitude;
   mainMarkerLongitude.value = longitude;
   advertFormAddress.value = `${latitude}, ${longitude}`;
@@ -122,8 +117,8 @@ const createAdvertMarker = (data) => {
     .bindPopup(createPopup(data));
 };
 
-// Создает маркер для каждого объявления
-const createMarkerForAdvert = (popupData) => {
+// Добавляет объявления на карту
+const addAdvertToMap = (popupData) => {
   if (popupData) {
     popupData.forEach((popup) => {
       createAdvertMarker(popup);
@@ -136,10 +131,10 @@ const createMarkerForAdvert = (popupData) => {
 // Возвращает карту в исходное состояние
 const resetMap = () => {
   map
-    .setView(COORDINATES_TOKYO, MAP_ZOOM)
+    .setView(COORDINATES_TOKYO, MAP_OPTION.zoom)
     .closePopup();
   mainMarker
     .setLatLng(COORDINATES_TOKYO);
 };
 
-export {createMarkerForAdvert, resetMap};
+export {initializeMap, addAdvertToMap, resetMap};

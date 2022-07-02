@@ -3,6 +3,7 @@ const mapCanvas = document.querySelector('#map-canvas');
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+// Создает сообщение об ошибке получения данных с сервера
 const createNotice = (message) => {
   const noticeTemplate = document.querySelector('#notice-message').content.querySelector('.notice-message');
   const notice = noticeTemplate.cloneNode(true);
@@ -33,6 +34,7 @@ const createNotice = (message) => {
   mapCanvas.append(notice);
 };
 
+// Создает сообщение об успешной отправке формы на сервер
 const createSuccessMessage = () => {
   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   const successMessage = successMessageTemplate.cloneNode(true);
@@ -53,6 +55,7 @@ const createSuccessMessage = () => {
   pageBody.append(successMessage);
 };
 
+// Создает сообщение об ошибке отправке формы на сервер
 const createErrorMessage = () => {
   const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
   const errorMessage = errorMessageTemplate.cloneNode(true);

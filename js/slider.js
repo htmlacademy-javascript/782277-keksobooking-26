@@ -38,6 +38,7 @@ advertFormSlider.noUiSlider.on('slide', () => {
   advertFormPrice.value = advertFormSlider.noUiSlider.get();
 });
 
+// Возвращает слайдер в исходное состояние
 const resetSlider = () => {
   advertFormSlider.noUiSlider.set(SLIDER.min);
 };

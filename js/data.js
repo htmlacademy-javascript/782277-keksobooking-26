@@ -1,4 +1,4 @@
-// Получаем данные от сервера
+// Получает данные от сервера
 const getData = (onSuccess, onError) => {
   fetch(
     'https://26.javascript.pages.academy/keksobooking/data',
@@ -22,7 +22,7 @@ const getData = (onSuccess, onError) => {
     });
 };
 
-// Отправляем данные серверу
+// Отправляет данные серверу
 const sendData = (onSuccess, onError, body) => {
   fetch(
     'https://26.javascript.pages.academy/keksobooking',

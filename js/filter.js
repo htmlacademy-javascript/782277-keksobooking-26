@@ -17,6 +17,7 @@ const enableMapFilter = () => {
   });
 };
 
+// Возвращает форму с фильтрами в исходное состояние
 const resetMapFilter = () => mapFilter.reset();
 
 export {disableMapFilter, enableMapFilter, resetMapFilter};

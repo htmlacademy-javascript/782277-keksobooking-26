@@ -1,6 +1,7 @@
 const advertForm = document.querySelector('.ad-form');
 const advertFormFieldsets = advertForm.querySelectorAll('fieldset');
 const advertFormSlider = advertForm.querySelector('.ad-form__slider');
+const advertFormSubmit = advertForm.querySelector('.ad-form__submit');
 
 // Блокирует форму создания нового объявления и поля внутри
 const disableAdvertForm = () => {
@@ -20,6 +21,18 @@ const enableAdvertForm = () => {
   });
 };
 
+// Блокировка кнопки "опубликовать"
+const disableSubmitButton = () => {
+  advertFormSubmit.disabled = true;
+  advertFormSubmit.textContent = 'Публикую...';
+};
+
+const enableSubmitButton = () => {
+  advertFormSubmit.disabled = false;
+  advertFormSubmit.textContent = 'Опубликовать';
+};
+
+// Возвращает форму создания нового объявления в исходное состояние
 const resetAdvertForm = () => advertForm.reset();
 
-export {disableAdvertForm, enableAdvertForm, resetAdvertForm};
+export {disableAdvertForm, enableAdvertForm, disableSubmitButton, enableSubmitButton, resetAdvertForm};
