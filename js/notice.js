@@ -25,6 +25,7 @@ const createNotice = (serverMessage) => {
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
+      evt.preventDefault();
       notice.remove();
     }
   });
@@ -44,6 +45,7 @@ const createSuccessMessage = () => {
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
+      evt.preventDefault();
       successMessage.remove();
     }
   });
@@ -68,6 +70,7 @@ const createErrorMessage = () => {
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
+      evt.preventDefault();
       errorMessage.remove();
     }
   });
