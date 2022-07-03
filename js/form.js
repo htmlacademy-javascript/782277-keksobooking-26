@@ -21,12 +21,13 @@ const enableAdvertForm = () => {
   });
 };
 
-// Блокировка кнопки "опубликовать"
+// Блокирует кнопку "опубликовать"
 const disableSubmitButton = () => {
   advertFormSubmit.disabled = true;
   advertFormSubmit.textContent = 'Публикую...';
 };
 
+// Активирует кнопку "опубликовать"
 const enableSubmitButton = () => {
   advertFormSubmit.disabled = false;
   advertFormSubmit.textContent = 'Опубликовать';

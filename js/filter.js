@@ -1,5 +1,10 @@
 const mapFilter = document.querySelector('.map__filters');
 const mapFilters = mapFilter.querySelectorAll('.map__filter, .map__features');
+// const mapFilterType = mapFilter.querySelector('#housing-type');
+// const mapFilterPrice = mapFilter.querySelector('#housing-price');
+// const mapFilterRoom = mapFilter.querySelector('#housing-rooms');
+// const mapFilterGuest = mapFilter.querySelector('#housing-guests');
+// const mapFilterFeature = mapFilter.querySelector('#housing-features');
 
 // Блокирует форму с фильтрами и фильтры внутри
 const disableMapFilter = () => {
