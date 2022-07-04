@@ -36,4 +36,4 @@ const enableSubmitButton = () => {
 // Возвращает форму создания нового объявления в исходное состояние
 const resetAdvertForm = () => advertForm.reset();
 
-export {disableAdvertForm, enableAdvertForm, disableSubmitButton, enableSubmitButton, resetAdvertForm};
+export {disableSubmitButton, enableSubmitButton, disableAdvertForm, enableAdvertForm, resetAdvertForm};

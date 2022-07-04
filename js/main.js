@@ -4,6 +4,9 @@ import {initializeMap, addAdvertToMap} from './map.js';
 import {setFilter, disableMapFilter} from './filter.js';
 import {disableAdvertForm} from './form.js';
 import {createNotice, createSuccessMessage, createErrorMessage} from './notice.js';
+import {debounce} from './util.js';
+
+const RERENDER_DELAY = 500;
 
 // Блокирует фильтрацию объявлений
 // Блокирует форму создания нового объявления
@@ -15,11 +18,12 @@ initializeMap();
 
 // Получает данные от сервера
 // Отрисовывает объявления на карте
+// Задает пользовательские фильтры
 // Иначе блокирует фильтр объявлений и показывает сообщение об ошибке
 getData(
   (adverts) => {
     addAdvertToMap(adverts);
-    setFilter(() => addAdvertToMap(adverts));
+    setFilter(debounce(() => addAdvertToMap(adverts), RERENDER_DELAY));
   },
   (message) => {
     disableMapFilter();
