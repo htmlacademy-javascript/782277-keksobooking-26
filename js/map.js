@@ -19,7 +19,7 @@ const mainMarkerLongitude = advertForm.querySelector('.js-marker__longitude');
 
 const MAP_OPTION = {
   accuracy: 5,
-  zoom: 12,
+  zoom: 12.5,
 };
 
 const MAIN_MARKER = {
@@ -39,8 +39,8 @@ const ADVERT_MARKER = {
 };
 
 const COORDINATES_TOKYO = {
-  lat: 35.6895,
-  lng: 139.692,
+  lat: 35.68247,
+  lng: 139.75219,
 };
 
 const MAX_ADVERTS = 10;
