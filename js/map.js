@@ -1,4 +1,13 @@
-import {disableMapFilter, enableMapFilter} from './filter.js';
+import {
+  filterType,
+  filterPrice,
+  filterRoom,
+  filterGuest,
+  filterFeature,
+  compareFeature,
+  disableMapFilter,
+  enableMapFilter
+} from './filter.js';
 import {enableAdvertForm} from './form.js';
 import {createPopup} from './popup.js';
 
@@ -33,6 +42,8 @@ const COORDINATES_TOKYO = {
   lat: 35.6895,
   lng: 139.692,
 };
+
+const MAX_ADVERTS = 10;
 
 const map = L.map(mapCanvas);
 
@@ -119,10 +130,23 @@ const createAdvertMarker = (data) => {
 
 // Добавляет объявления на карту
 const addAdvertToMap = (popupData) => {
+
+  map.closePopup();
+  markerGroup.clearLayers();
+
   if (popupData) {
-    popupData.forEach((popup) => {
-      createAdvertMarker(popup);
-    });
+    popupData
+      .slice()
+      .filter((advert) => filterType(advert))
+      .filter((advert) => filterPrice(advert))
+      .filter((advert) => filterRoom(advert))
+      .filter((advert) => filterGuest(advert))
+      .filter((advert) => filterFeature(advert))
+      .sort(compareFeature)
+      .slice(0, MAX_ADVERTS)
+      .forEach((advert) => {
+        createAdvertMarker(advert);
+      });
   } else {
     disableMapFilter();
   }
