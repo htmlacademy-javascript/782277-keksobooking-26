@@ -1,7 +1,7 @@
 import {sendData} from './data.js';
 import {resetMap} from './map.js';
 import {resetMapFilter} from './filter.js';
-import {resetAdvertForm} from './form.js';
+import {disableSubmitButton, enableSubmitButton, resetAdvertForm} from './form.js';
 import {resetSlider} from './slider.js';
 
 const advertForm = document.querySelector('.ad-form');
@@ -13,7 +13,6 @@ const advertFormTimeIn = advertForm.querySelector('#timein');
 const advertFormTimeOut = advertForm.querySelector('#timeout');
 const advertFormRoom = advertForm.querySelector('#room_number');
 const advertFormGuest = advertForm.querySelector('#capacity');
-const advertFormSubmit = advertForm.querySelector('.ad-form__submit');
 const advertFormReset = advertForm.querySelector('.ad-form__reset');
 
 const TITLE_OPTION = {
@@ -148,26 +147,16 @@ advertFormGuest.addEventListener('change', () => {
   pristine.validate(advertFormRoom);
 });
 
-// Блокировка кнопки "опубликовать"
-const blockSubmitButton = () => {
-  advertFormSubmit.disabled = true;
-  advertFormSubmit.textContent = 'Публикую...';
-};
-
-const unblockSubmitButton = () => {
-  advertFormSubmit.disabled = false;
-  advertFormSubmit.textContent = 'Опубликовать';
-};
-
 // Возвращает страницу в исходное состояние
 const resetPage = () => {
-  resetMap();
   resetMapFilter();
   resetAdvertForm();
   resetSlider();
+  resetMap();
 };
 
-advertFormReset.addEventListener('click', () => {
+advertFormReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
   resetPage();
 });
 
@@ -178,16 +167,16 @@ const setAdvertFormSubmit = (onSuccess, onError) => {
 
     const isValid = pristine.validate();
     if (isValid) {
-      blockSubmitButton();
+      disableSubmitButton();
       sendData(
         () => {
           onSuccess();
-          unblockSubmitButton();
+          enableSubmitButton();
           resetPage();
         },
         () => {
           onError();
-          unblockSubmitButton();
+          enableSubmitButton();
         },
         new FormData(evt.target)
       );

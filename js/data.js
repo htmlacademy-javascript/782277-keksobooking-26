@@ -1,4 +1,6 @@
-// Получаем данные от сервера
+let advertData = [];
+
+// Получает данные от сервера
 const getData = (onSuccess, onError) => {
   fetch(
     'https://26.javascript.pages.academy/keksobooking/data',
@@ -15,6 +17,7 @@ const getData = (onSuccess, onError) => {
       throw new Error(`${response.status} ${response.statusText}`);
     })
     .then((data) => {
+      advertData = data.slice();
       onSuccess(data);
     })
     .catch((err) => {
@@ -22,7 +25,7 @@ const getData = (onSuccess, onError) => {
     });
 };
 
-// Отправляем данные серверу
+// Отправляет данные серверу
 const sendData = (onSuccess, onError, body) => {
   fetch(
     'https://26.javascript.pages.academy/keksobooking',
@@ -44,4 +47,4 @@ const sendData = (onSuccess, onError, body) => {
     });
 };
 
-export{getData, sendData};
+export{advertData, getData, sendData};

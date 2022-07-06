@@ -3,14 +3,15 @@ const mapCanvas = document.querySelector('#map-canvas');
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const createNotice = (serverMessage) => {
+// Создает сообщение об ошибке получения данных с сервера
+const createNotice = (message) => {
   const noticeTemplate = document.querySelector('#notice-message').content.querySelector('.notice-message');
   const notice = noticeTemplate.cloneNode(true);
-  const noticeServerMessage = notice.querySelector('.notice-message__server');
+  const noticeError = notice.querySelector('.notice-message__error');
   const noticeButton = notice.querySelector('.notice-message__button');
 
-  if (serverMessage) {
-    noticeServerMessage.textContent = serverMessage;
+  if (message) {
+    noticeError.textContent = message;
   }
 
   noticeButton.addEventListener('click', () => {
@@ -25,6 +26,7 @@ const createNotice = (serverMessage) => {
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
+      evt.preventDefault();
       notice.remove();
     }
   });
@@ -32,6 +34,7 @@ const createNotice = (serverMessage) => {
   mapCanvas.append(notice);
 };
 
+// Создает сообщение об успешной отправке формы на сервер
 const createSuccessMessage = () => {
   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   const successMessage = successMessageTemplate.cloneNode(true);
@@ -44,6 +47,7 @@ const createSuccessMessage = () => {
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
+      evt.preventDefault();
       successMessage.remove();
     }
   });
@@ -51,6 +55,7 @@ const createSuccessMessage = () => {
   pageBody.append(successMessage);
 };
 
+// Создает сообщение об ошибке отправке формы на сервер
 const createErrorMessage = () => {
   const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
   const errorMessage = errorMessageTemplate.cloneNode(true);
@@ -68,6 +73,7 @@ const createErrorMessage = () => {
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
+      evt.preventDefault();
       errorMessage.remove();
     }
   });
