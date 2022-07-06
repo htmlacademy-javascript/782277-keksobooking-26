@@ -1,15 +1,7 @@
-import {
-  filterType,
-  filterPrice,
-  filterRoom,
-  filterGuest,
-  filterFeature,
-  compareFeature,
-  disableMapFilter,
-  enableMapFilter
-} from './filter.js';
-import {enableAdvertForm} from './form.js';
+import {advertData} from './data.js';
 import {createPopup} from './popup.js';
+import {checkAdvert, compareAdvertFeature, disableMapFilter, enableMapFilter} from './filter.js';
+import {enableAdvertForm} from './form.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
 const advertForm = document.querySelector('.ad-form');
@@ -108,6 +100,8 @@ const setAddressCoordinates = ({lat, lng}) => {
   advertFormAddress.value = `${latitude}, ${longitude}`;
 };
 
+setAddressCoordinates(COORDINATES_TOKYO);
+
 mainMarker.on('move', (evt) => {
   setAddressCoordinates(evt.target.getLatLng());
 });
@@ -137,12 +131,8 @@ const addAdvertToMap = (popupData) => {
   if (popupData) {
     popupData
       .slice()
-      .filter((advert) => filterType(advert))
-      .filter((advert) => filterPrice(advert))
-      .filter((advert) => filterRoom(advert))
-      .filter((advert) => filterGuest(advert))
-      .filter((advert) => filterFeature(advert))
-      .sort(compareFeature)
+      .filter((advert) => checkAdvert(advert))
+      .sort(compareAdvertFeature)
       .slice(0, MAX_ADVERTS)
       .forEach((advert) => {
         createAdvertMarker(advert);
@@ -159,6 +149,9 @@ const resetMap = () => {
     .closePopup();
   mainMarker
     .setLatLng(COORDINATES_TOKYO);
+
+  addAdvertToMap(advertData);
+  setAddressCoordinates(COORDINATES_TOKYO);
 };
 
 export {initializeMap, addAdvertToMap, resetMap};

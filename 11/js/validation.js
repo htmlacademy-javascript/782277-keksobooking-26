@@ -149,13 +149,14 @@ advertFormGuest.addEventListener('change', () => {
 
 // Возвращает страницу в исходное состояние
 const resetPage = () => {
-  resetMap();
   resetMapFilter();
   resetAdvertForm();
   resetSlider();
+  resetMap();
 };
 
-advertFormReset.addEventListener('click', () => {
+advertFormReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
   resetPage();
 });
 

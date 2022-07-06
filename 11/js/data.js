@@ -1,3 +1,5 @@
+let advertData = [];
+
 // Получает данные от сервера
 const getData = (onSuccess, onError) => {
   fetch(
@@ -15,6 +17,7 @@ const getData = (onSuccess, onError) => {
       throw new Error(`${response.status} ${response.statusText}`);
     })
     .then((data) => {
+      advertData = data.slice();
       onSuccess(data);
     })
     .catch((err) => {
@@ -44,4 +47,4 @@ const sendData = (onSuccess, onError, body) => {
     });
 };
 
-export{getData, sendData};
+export{advertData, getData, sendData};
