@@ -1046,6 +1046,12 @@ fieldset {
   border-color: #ff5635;
 }
 
+.ad-form__element--invalid input:hover,
+.ad-form__element--invalid select:hover,
+.ad-form__element--invalid textarea:hover {
+  border-color: #ff5635;
+}
+
 .ad-form__element--invalid input:focus,
 .ad-form__element--invalid select:focus,
 .ad-form__element--invalid textarea:focus {
@@ -1056,14 +1062,22 @@ fieldset {
 .ad-form__element--valid input,
 .ad-form__element--valid select,
 .ad-form__element--valid textarea {
-  border-color: #00ff00;
+  border-color: #d9d9d3;
+}
+
+.ad-form__element--valid input:hover,
+.ad-form__element--valid select:hover,
+.ad-form__element--valid textarea:hover {
+  border-color: #d9d9d3;
+  -webkit-box-shadow: 0 0 2px 2px #d9d9d3;
+          box-shadow: 0 0 2px 2px #d9d9d3;
 }
 
 .ad-form__element--valid input:focus,
 .ad-form__element--valid select:focus,
 .ad-form__element--valid textarea:focus {
-  -webkit-box-shadow: 0 0 2px 2px #00ff00;
-          box-shadow: 0 0 2px 2px #00ff00;
+  -webkit-box-shadow: 0 0 2px 2px #d9d9d3;
+          box-shadow: 0 0 2px 2px #d9d9d3;
 }
 
 .notice-message {
