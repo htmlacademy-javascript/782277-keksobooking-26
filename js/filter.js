@@ -11,66 +11,66 @@ const PRICE_RANGE = {
   high: 50000,
 };
 
-// Фильтр по типу жилья
-const filterType = (data) => {
-  const filterTypeValue = mapFilterType.value;
-  const advertTypeValue = data.offer.type;
+// Проверяет тип жилья
+const checkType = (advertData) => {
+  const filterType = mapFilterType.value;
+  const advertType = advertData;
 
-  switch (filterTypeValue) {
+  switch (filterType) {
     case 'any':
       return true;
     default:
-      return filterTypeValue === advertTypeValue;
+      return filterType === advertType;
   }
 };
 
-// Фильтр по цене за ночь
-const filterPrice = (data) => {
-  const filterPriceValue = mapFilterPrice.value;
-  const advertPriceValue = Number(data.offer.price);
+// Проверяет цену за ночь
+const checkPrice = (advertData) => {
+  const filterPrice = mapFilterPrice.value;
+  const advertPrice = Number(advertData);
 
-  switch (filterPriceValue) {
+  switch (filterPrice) {
     case 'any':
       return true;
     case 'low':
-      return advertPriceValue < PRICE_RANGE.low;
+      return advertPrice < PRICE_RANGE.low;
     case 'middle':
-      return advertPriceValue >= PRICE_RANGE.low && advertPriceValue <= PRICE_RANGE.high;
+      return advertPrice >= PRICE_RANGE.low && advertPrice <= PRICE_RANGE.high;
     case 'high':
-      return advertPriceValue > PRICE_RANGE.high;
+      return advertPrice > PRICE_RANGE.high;
   }
 };
 
-// Фильтр по количеству комнат
-const filterRoom = (data) => {
-  const filterRoomValue = mapFilterRoom.value;
-  const advertRoomValue = Number(data.offer.rooms);
+// Проверяет количество комнат
+const checkRoom = (advertData) => {
+  const filterRoom = mapFilterRoom.value;
+  const advertRoom = Number(advertData);
 
-  switch (filterRoomValue) {
+  switch (filterRoom) {
     case 'any':
       return true;
     default:
-      return Number(filterRoomValue) === advertRoomValue;
+      return Number(filterRoom) === advertRoom;
   }
 };
 
-// Фильтр по количеству гостей
-const filterGuest = (data) => {
-  const filterGuestValue = mapFilterGuest.value;
-  const advertGuestValue = Number(data.offer.guests);
+// Проверяет количество гостей
+const checkGuest = (advertData) => {
+  const filterGuest = mapFilterGuest.value;
+  const advertGuest = Number(advertData);
 
-  switch (filterGuestValue) {
+  switch (filterGuest) {
     case 'any':
       return true;
     default:
-      return Number(filterGuestValue) === advertGuestValue;
+      return Number(filterGuest) === advertGuest;
   }
 };
 
-// Фильтр по преимуществам
-const filterFeature = (data) => {
+// Проверяет преимущества
+const checkFeature = (advertData) => {
   const checkedFilterFeatures = [];
-  const advertFeatures = data.offer.features;
+  const advertFeatures = advertData;
 
   mapFilterFeatures.forEach((feature) => {
     if(feature.checked) {
@@ -78,14 +78,22 @@ const filterFeature = (data) => {
     }
   });
 
-  if (checkedFilterFeatures.length > 0 && advertFeatures) {
+  if (checkedFilterFeatures.length && advertFeatures) {
     return checkedFilterFeatures.every((feature) => advertFeatures.includes(feature));
   }
 
-  if (checkedFilterFeatures.length === 0) {
+  if (!checkedFilterFeatures.length) {
     return true;
   }
 };
+
+// Проверяет объявление на соответствие всех фильтров
+const checkAdvert = ({offer: {type, price, rooms, guests, features}}) =>
+  checkType(type) &&
+  checkPrice(price) &&
+  checkRoom(rooms) &&
+  checkGuest(guests) &&
+  checkFeature(features);
 
 // Возвращает количество преимуществ в объявлении
 const getFeatureRank = (data) => {
@@ -97,8 +105,8 @@ const getFeatureRank = (data) => {
   return 0;
 };
 
-// Сравнивает количество преимуществ в объявлениях
-const compareFeature = (advertA, advertB) => {
+// Сравнивает объявления по количеству преимуществ
+const compareAdvertFeature = (advertA, advertB) => {
   const rankA = getFeatureRank(advertA);
   const rankB = getFeatureRank(advertB);
 
@@ -131,15 +139,4 @@ const enableMapFilter = () => {
 // Возвращает форму с фильтрами в исходное состояние
 const resetMapFilter = () => mapFilter.reset();
 
-export {
-  setFilter,
-  filterType,
-  filterPrice,
-  filterRoom,
-  filterGuest,
-  filterFeature,
-  compareFeature,
-  disableMapFilter,
-  enableMapFilter,
-  resetMapFilter
-};
+export {setFilter, checkAdvert, compareAdvertFeature, disableMapFilter, enableMapFilter, resetMapFilter};
