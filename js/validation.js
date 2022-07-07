@@ -140,11 +140,15 @@ pristine.addValidator(advertFormRoom, validateCapacity, createCapacityValidation
 pristine.addValidator(advertFormGuest, validateCapacity, createCapacityValidationMessage);
 
 advertFormRoom.addEventListener('change', () => {
-  pristine.validate(advertFormGuest);
+  if (pristine.validate(advertFormRoom)) {
+    pristine.validate(advertFormGuest);
+  }
 });
 
 advertFormGuest.addEventListener('change', () => {
-  pristine.validate(advertFormRoom);
+  if (pristine.validate(advertFormGuest)) {
+    pristine.validate(advertFormRoom);
+  }
 });
 
 // Возвращает страницу в исходное состояние
