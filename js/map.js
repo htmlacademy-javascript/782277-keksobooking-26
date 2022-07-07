@@ -1,13 +1,7 @@
-import {advertData} from './data.js';
+import {getAdvertData} from './data.js';
 import {createPopup} from './popup.js';
 import {checkAdvert, compareAdvertFeature, disableMapFilter, enableMapFilter} from './filter.js';
 import {enableAdvertForm} from './form.js';
-
-const mapCanvas = document.querySelector('#map-canvas');
-const advertForm = document.querySelector('.ad-form');
-const advertFormAddress = advertForm.querySelector('#address');
-const mainMarkerLatitude = advertForm.querySelector('.js-marker__latitude');
-const mainMarkerLongitude = advertForm.querySelector('.js-marker__longitude');
 
 const MAP_OPTION = {
   accuracy: 5,
@@ -36,6 +30,12 @@ const COORDINATES_TOKYO = {
 };
 
 const MAX_ADVERTS = 10;
+
+const mapCanvas = document.querySelector('#map-canvas');
+const advertForm = document.querySelector('.ad-form');
+const advertFormAddress = advertForm.querySelector('#address');
+const mainMarkerLatitude = advertForm.querySelector('.js-marker__latitude');
+const mainMarkerLongitude = advertForm.querySelector('.js-marker__longitude');
 
 const map = L.map(mapCanvas);
 
@@ -150,7 +150,7 @@ const resetMap = () => {
   mainMarker
     .setLatLng(COORDINATES_TOKYO);
 
-  addAdvertToMap(advertData);
+  addAdvertToMap(getAdvertData());
   setAddressCoordinates(COORDINATES_TOKYO);
 };
 
