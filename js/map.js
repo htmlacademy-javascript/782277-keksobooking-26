@@ -1,4 +1,4 @@
-import {advertData} from './data.js';
+import {getAdvertData} from './data.js';
 import {createPopup} from './popup.js';
 import {checkAdvert, compareAdvertFeature, disableMapFilter, enableMapFilter} from './filter.js';
 import {enableAdvertForm} from './form.js';
@@ -150,7 +150,7 @@ const resetMap = () => {
   mainMarker
     .setLatLng(COORDINATES_TOKYO);
 
-  addAdvertToMap(advertData);
+  addAdvertToMap(getAdvertData());
   setAddressCoordinates(COORDINATES_TOKYO);
 };
 
