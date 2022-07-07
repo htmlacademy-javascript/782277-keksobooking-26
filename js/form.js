@@ -1,14 +1,13 @@
+const FILE_TYPES = ['jpeg', 'jpg', 'png'];
+
 const advertForm = document.querySelector('.ad-form');
 const advertFormFieldsets = advertForm.querySelectorAll('fieldset');
 const advertFormSlider = advertForm.querySelector('.ad-form__slider');
 const advertFormSubmit = advertForm.querySelector('.ad-form__submit');
-
 const avatarImageChooser = advertForm.querySelector('#avatar');
 const avatarImage = advertForm.querySelector('.ad-form-header__preview img');
 const advertImageChooser = advertForm.querySelector('#images');
 const advertImage = advertForm.querySelector('.ad-form__photo');
-
-const FILE_TYPES = ['jpeg', 'jpg', 'png'];
 
 // Устанавливает превью картинки
 const setPreview = (chooser, image) => {

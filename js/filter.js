@@ -1,3 +1,8 @@
+const PRICE_RANGE = {
+  low: 10000,
+  high: 50000,
+};
+
 const mapFilter = document.querySelector('.map__filters');
 const mapFilters = mapFilter.querySelectorAll('.map__filter, .map__features');
 const mapFilterType = mapFilter.querySelector('#housing-type');
@@ -5,11 +10,6 @@ const mapFilterPrice = mapFilter.querySelector('#housing-price');
 const mapFilterRoom = mapFilter.querySelector('#housing-rooms');
 const mapFilterGuest = mapFilter.querySelector('#housing-guests');
 const mapFilterFeatures = mapFilter.querySelectorAll('#housing-features input');
-
-const PRICE_RANGE = {
-  low: 10000,
-  high: 50000,
-};
 
 // Проверяет тип жилья
 const checkType = (advertData) => {

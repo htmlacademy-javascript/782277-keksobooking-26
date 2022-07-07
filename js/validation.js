@@ -4,20 +4,14 @@ import {resetMapFilter} from './filter.js';
 import {disableSubmitButton, enableSubmitButton, resetAdvertForm} from './form.js';
 import {resetSlider} from './slider.js';
 
-const advertForm = document.querySelector('.ad-form');
-const advertFormTitle = advertForm.querySelector('#title');
-const advertFormType = advertForm.querySelector('#type');
-const advertFormPrice = advertForm.querySelector('#price');
-const advertFormSlider = advertForm.querySelector('.ad-form__slider');
-const advertFormTimeIn = advertForm.querySelector('#timein');
-const advertFormTimeOut = advertForm.querySelector('#timeout');
-const advertFormRoom = advertForm.querySelector('#room_number');
-const advertFormGuest = advertForm.querySelector('#capacity');
-const advertFormReset = advertForm.querySelector('.ad-form__reset');
-
 const TITLE_OPTION = {
   minLength: 30,
   maxLength: 100,
+};
+
+const CAPACITY_OPTION = {
+  notGuest: 0,
+  maxRoom: 100,
 };
 
 const priceOption = {
@@ -29,10 +23,16 @@ const priceOption = {
   maxPerNight: 100000,
 };
 
-const CAPACITY_OPTION = {
-  notGuest: 0,
-  maxRoom: 100,
-};
+const advertForm = document.querySelector('.ad-form');
+const advertFormTitle = advertForm.querySelector('#title');
+const advertFormType = advertForm.querySelector('#type');
+const advertFormPrice = advertForm.querySelector('#price');
+const advertFormSlider = advertForm.querySelector('.ad-form__slider');
+const advertFormTimeIn = advertForm.querySelector('#timein');
+const advertFormTimeOut = advertForm.querySelector('#timeout');
+const advertFormRoom = advertForm.querySelector('#room_number');
+const advertFormGuest = advertForm.querySelector('#capacity');
+const advertFormReset = advertForm.querySelector('.ad-form__reset');
 
 const pristine = new Pristine(advertForm, {
   classTo: 'ad-form__element',

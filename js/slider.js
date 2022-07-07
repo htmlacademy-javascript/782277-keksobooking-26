@@ -1,13 +1,13 @@
-const advertForm = document.querySelector('.ad-form');
-const advertFormPrice = advertForm.querySelector('#price');
-const advertFormSlider = advertForm.querySelector('.ad-form__slider');
-
 const SLIDER = {
   min: 0,
   max: 100000,
   step: 100,
   accuracy: 0,
 };
+
+const advertForm = document.querySelector('.ad-form');
+const advertFormPrice = advertForm.querySelector('#price');
+const advertFormSlider = advertForm.querySelector('.ad-form__slider');
 
 // Создает и настраивает слайдер
 noUiSlider.create(advertFormSlider, {
