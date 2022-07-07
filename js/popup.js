@@ -10,9 +10,9 @@ const addElementSrc = (element, elementSrc) => {
 
 // Добавляет textContent DOM-элементу
 // Если данных нет, то скрывает DOM-элемент
-const addElementData = (element, elementData) => {
-  if (elementData) {
-    element.textContent = elementData;
+const addElementData = (element, elementText) => {
+  if (elementText) {
+    element.textContent = elementText;
   } else {
     element.classList.add('hidden');
   }
@@ -36,7 +36,7 @@ const getHouseType = (houseType) => {
 
 // Добавляет преимущества жилья, на основе полученных данных
 // Если данных нет, то скрывает поле с преимуществами
-const getHouseFeatures = (templateFeatureList, templateFeatures, dataFeatures) => {
+const getHouseFeatures = (templateFeatureBlock, templateFeatures, dataFeatures) => {
   if (dataFeatures) {
     templateFeatures.forEach((templateFeature) => {
       const isNecessary =  dataFeatures.some(
@@ -48,13 +48,13 @@ const getHouseFeatures = (templateFeatureList, templateFeatures, dataFeatures) =
       }
     });
   } else {
-    templateFeatureList.classList.add('hidden');
+    templateFeatureBlock.classList.add('hidden');
   }
 };
 
 // Добавляет фото жилья
 // Если данных нет, то скрывает поле с фотографиями
-const getHousePhotos = (templatePhotoList, templatePhoto, dataPhotos) => {
+const getHousePhotos = (templatePhotoBlock, templatePhoto, dataPhotos) => {
   if (dataPhotos) {
     const photoFragment = document.createDocumentFragment();
 
@@ -64,10 +64,10 @@ const getHousePhotos = (templatePhotoList, templatePhoto, dataPhotos) => {
       photoFragment.append(photo);
     });
 
-    templatePhotoList.innerHTML = '';
-    templatePhotoList.append(photoFragment);
+    templatePhotoBlock.innerHTML = '';
+    templatePhotoBlock.append(photoFragment);
   } else {
-    templatePhotoList.classList.add('hidden');
+    templatePhotoBlock.classList.add('hidden');
   }
 };
 
@@ -86,11 +86,11 @@ const createPopup = ({
   const popupType = popup.querySelector('.popup__type');
   const popupCapacity = popup.querySelector('.popup__text--capacity');
   const popupTime = popup.querySelector('.popup__text--time');
-  const popupFeatureList = popup.querySelector('.popup__features');
+  const popupFeatureBlock = popup.querySelector('.popup__features');
   const popupFeatures = popup.querySelectorAll('.popup__feature');
   const popupDescription = popup.querySelector('.popup__description');
-  const popupPhotoList = popup.querySelector('.popup__photos');
-  const popupPhoto = popupPhotoList.querySelector('.popup__photo');
+  const popupPhotoBlock = popup.querySelector('.popup__photos');
+  const popupPhoto = popupPhotoBlock.querySelector('.popup__photo');
 
   addElementSrc(popupAvatar, avatar);
   addElementData(popupTitle, title);
@@ -99,9 +99,9 @@ const createPopup = ({
   addElementData(popupType, getHouseType(type));
   addElementData(popupCapacity, `${rooms} комнаты для ${guests} гостей`);
   addElementData(popupTime, `Заезд после ${checkin}, выезд до ${checkout}`);
-  getHouseFeatures(popupFeatureList, popupFeatures, features);
+  getHouseFeatures(popupFeatureBlock, popupFeatures, features);
   addElementData(popupDescription, description);
-  getHousePhotos(popupPhotoList, popupPhoto, photos);
+  getHousePhotos(popupPhotoBlock, popupPhoto, photos);
 
   return popup;
 };
