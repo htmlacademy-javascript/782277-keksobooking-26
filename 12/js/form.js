@@ -9,6 +9,8 @@ const avatarImage = advertForm.querySelector('.ad-form-header__preview img');
 const advertImageChooser = advertForm.querySelector('#images');
 const advertImage = advertForm.querySelector('.ad-form__photo');
 
+const defaultAvatarSrc = avatarImage.src;
+
 // Устанавливает превью картинки
 const setPreview = (chooser, image) => {
   const file = chooser.files[0];
@@ -74,6 +76,10 @@ const enableSubmitButton = () => {
 };
 
 // Возвращает форму создания нового объявления в исходное состояние
-const resetAdvertForm = () => advertForm.reset();
+const resetAdvertForm = () => {
+  advertForm.reset();
+  avatarImage.src = defaultAvatarSrc;
+  advertImage.innerHTML = '';
+};
 
 export {disableSubmitButton, enableSubmitButton, disableAdvertForm, enableAdvertForm, resetAdvertForm};
