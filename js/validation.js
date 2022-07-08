@@ -136,19 +136,14 @@ const createCapacityValidationMessage = () => {
   return 'Попробуйте выбрать другой вариант';
 };
 
-pristine.addValidator(advertFormRoom, validateCapacity, createCapacityValidationMessage);
 pristine.addValidator(advertFormGuest, validateCapacity, createCapacityValidationMessage);
 
 advertFormRoom.addEventListener('change', () => {
-  if (pristine.validate(advertFormRoom)) {
-    pristine.validate(advertFormGuest);
-  }
+  pristine.validate(advertFormGuest);
 });
 
 advertFormGuest.addEventListener('change', () => {
-  if (pristine.validate(advertFormGuest)) {
-    pristine.validate(advertFormRoom);
-  }
+  pristine.validate(advertFormGuest);
 });
 
 // Возвращает страницу в исходное состояние
