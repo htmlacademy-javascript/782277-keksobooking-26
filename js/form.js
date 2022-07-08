@@ -9,7 +9,7 @@ const avatarImage = advertForm.querySelector('.ad-form-header__preview img');
 const advertImageChooser = advertForm.querySelector('#images');
 const advertImage = advertForm.querySelector('.ad-form__photo');
 
-const defaultAvatarSrc = avatarImage.src;
+const avatarPlaceholderSrc = avatarImage.src;
 
 // Устанавливает превью картинки
 const setPreview = (chooser, image) => {
@@ -78,7 +78,7 @@ const enableSubmitButton = () => {
 // Возвращает форму создания нового объявления в исходное состояние
 const resetAdvertForm = () => {
   advertForm.reset();
-  avatarImage.src = defaultAvatarSrc;
+  avatarImage.src = avatarPlaceholderSrc;
   advertImage.innerHTML = '';
 };
 
