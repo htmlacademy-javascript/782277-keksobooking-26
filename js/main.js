@@ -1,7 +1,7 @@
 import {getData} from './data.js';
 import {setAdvertFormSubmit} from './validation.js';
 import {initializeMap, addAdvertToMap} from './map.js';
-import {setFilter, disableMapFilter} from './filter.js';
+import {setFilter, disableMapFilter, enableMapFilter} from './filter.js';
 import {disableAdvertForm} from './form.js';
 import {createNotice, createSuccessMessage, createErrorMessage} from './notice.js';
 import {debounce} from './util.js';
@@ -23,6 +23,7 @@ initializeMap();
 getData(
   (adverts) => {
     addAdvertToMap(adverts);
+    enableMapFilter();
     setFilter(debounce(() => addAdvertToMap(adverts), RERENDER_DELAY));
   },
   (message) => {
