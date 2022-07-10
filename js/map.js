@@ -1,6 +1,6 @@
 import {getAdvertData} from './data.js';
 import {createPopup} from './popup.js';
-import {checkAdvert, compareAdvertFeature, disableMapFilter, enableMapFilter} from './filter.js';
+import {checkAdvert, compareAdvertFeature, disableMapFilter} from './filter.js';
 import {enableAdvertForm} from './form.js';
 
 const MAP_OPTION = {
@@ -43,7 +43,6 @@ const map = L.map(mapCanvas);
 const initializeMap = () => {
   map
     .on('load', () => {
-      enableMapFilter();
       enableAdvertForm();
     })
     .setView({
