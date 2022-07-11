@@ -1,5 +1,7 @@
-const SERVER_URL_GET = 'https://26.javascript.pages.academy/keksobooking/data';
-const SERVER_URL_POST = 'https://26.javascript.pages.academy/keksobooking';
+const ServerMethod = {
+  GET: 'https://26.javascript.pages.academy/keksobooking/data',
+  POST: 'https://26.javascript.pages.academy/keksobooking',
+};
 
 let receivedData = [];
 const getAdvertData = () => receivedData.slice();
@@ -7,7 +9,7 @@ const getAdvertData = () => receivedData.slice();
 // Получает данные от сервера
 const getData = (onSuccess, onError) => {
   fetch(
-    SERVER_URL_GET,
+    ServerMethod.GET,
     {
       method: 'GET',
       credentials: 'same-origin',
@@ -32,7 +34,7 @@ const getData = (onSuccess, onError) => {
 // Отправляет данные серверу
 const sendData = (onSuccess, onError, body) => {
   fetch(
-    SERVER_URL_POST,
+    ServerMethod.POST,
     {
       method: 'POST',
       credentials: 'same-origin',
