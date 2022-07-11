@@ -16,25 +16,22 @@ const createNotice = (message) => {
 
   const onNoticeButtonClick = () => {
     notice.remove();
-
     removeNoticeListeners();
   };
 
   const onNoticeClick = (evt) => {
     if (evt.target !== notice) {
       notice.remove();
+      removeNoticeListeners();
     }
-
-    removeNoticeListeners();
   };
 
   const onNoticeEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       notice.remove();
+      removeNoticeListeners();
     }
-
-    removeNoticeListeners();
   };
 
   function removeNoticeListeners () {
@@ -55,11 +52,8 @@ const createSuccessMessage = () => {
   const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
   const successMessage = successMessageTemplate.cloneNode(true);
 
-  const onSuccessMessageClick = (evt) => {
-    if (evt.target === successMessage) {
-      successMessage.remove();
-    }
-
+  const onSuccessMessageClick = () => {
+    successMessage.remove();
     removeSuccessMessageListeners();
   };
 
@@ -67,9 +61,8 @@ const createSuccessMessage = () => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       successMessage.remove();
+      removeSuccessMessageListeners();
     }
-
-    removeSuccessMessageListeners();
   };
 
   function removeSuccessMessageListeners () {
@@ -91,15 +84,11 @@ const createErrorMessage = () => {
 
   const onErrorMessageButtonClick = () => {
     errorMessage.remove();
-
     removeErrorMessageListeners();
   };
 
-  const onErrorMessageClick = (evt) => {
-    if (evt.target === errorMessage) {
-      errorMessage.remove();
-    }
-
+  const onErrorMessageClick = () => {
+    errorMessage.remove();
     removeErrorMessageListeners();
   };
 
@@ -107,9 +96,8 @@ const createErrorMessage = () => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       errorMessage.remove();
+      removeErrorMessageListeners();
     }
-
-    removeErrorMessageListeners();
   };
 
   function removeErrorMessageListeners () {
