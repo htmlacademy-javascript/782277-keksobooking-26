@@ -1,10 +1,13 @@
+const SERVER_URL_GET = 'https://26.javascript.pages.academy/keksobooking/data';
+const SERVER_URL_POST = 'https://26.javascript.pages.academy/keksobooking';
+
 let receivedData = [];
 const getAdvertData = () => receivedData.slice();
 
 // Получает данные от сервера
 const getData = (onSuccess, onError) => {
   fetch(
-    'https://26.javascript.pages.academy/keksobooking/data',
+    SERVER_URL_GET,
     {
       method: 'GET',
       credentials: 'same-origin',
@@ -29,7 +32,7 @@ const getData = (onSuccess, onError) => {
 // Отправляет данные серверу
 const sendData = (onSuccess, onError, body) => {
   fetch(
-    'https://26.javascript.pages.academy/keksobooking',
+    SERVER_URL_POST,
     {
       method: 'POST',
       credentials: 'same-origin',
